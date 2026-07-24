@@ -4,7 +4,7 @@
 [![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](#12-license)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](#10-license)
 
 LeadDesk Mini is a full-stack web application designed for digital agencies to capture, organize, and manage client inquiries. Built with Next.js, React, Tailwind CSS, and MongoDB, it provides a public landing page with validated lead capture forms and a protected management dashboard for agency operations.
 
@@ -51,7 +51,39 @@ LeadDesk Mini provides a centralized lead management platform that replaces stat
 
 ---
 
-## 4. Project Structure
+## 4. System Architecture
+
+![System Architecture Diagram](public/architecture_diagram.jpg)
+
+### Layered Architecture Flow
+```text
+Visitor / Admin Client (React UI)
+  │
+  ▼
+Next.js Middleware Guard (JWT Verification & Security Headers)
+  │
+  ▼
+App Router Gateways (src/app/api/*)
+  │
+  ▼
+Validation Layer (src/validators/*)
+  │
+  ▼
+Business Logic Services (src/services/*)
+  │
+  ▼
+Data Access Repositories (src/repositories/*)
+  │
+  ▼
+Database Layer (src/lib/db.js with DNS SRV Resolver & Cached Connection)
+  │
+  ▼
+MongoDB Atlas (Isolated leaddesk-mini Database)
+```
+
+---
+
+## 5. Project Structure
 
 ```text
 src/
@@ -73,43 +105,6 @@ src/
 ├── utils/                    # Utility functions and security headers
 └── validators/               # Input validation logic & unit tests
 ```
-
----
-
-## 5. Getting Started
-
-### Prerequisites
-- Node.js v18.0.0 or higher
-- npm v9.0.0 or higher
-- MongoDB Atlas cluster or local MongoDB instance
-
-### Quick Setup
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/anirudhthakur-07/LeadDesk-Mini.git
-   cd LeadDesk-Mini
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Configure environment variables**:
-   Create a `.env.local` file in the root directory based on `.env.example`.
-
-4. **Start the development server**:
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:3000` in your browser.
-
-5. **Build for production**:
-   ```bash
-   npm run build
-   npm start
-   ```
 
 ---
 
@@ -159,54 +154,13 @@ LeadDesk Mini utilizes JSON Web Token (JWT) session authentication:
 
 ---
 
-## 9. Deployment
-
-LeadDesk Mini is configured for deployment on Vercel or any Node.js hosting provider.
-
-### Vercel Deployment
-
-1. Push your code to your GitHub repository.
-2. Import the project into your Vercel Dashboard.
-3. Configure `MONGODB_URI` and `JWT_SECRET` in **Project Settings ➔ Environment Variables**.
-4. Click **Deploy**.
-
----
-
-## 10. Screenshots
-
-```text
-+-----------------------------------------------------------------------+
-|                                                                       |
-|                     [Landing Page & Lead Form UI]                     |
-|                                                                       |
-+-----------------------------------------------------------------------+
-|                                                                       |
-|                    [Admin Dashboard & Leads Table]                    |
-|                                                                       |
-+-----------------------------------------------------------------------+
-```
-
----
-
-## 11. Author
+## 9. Author
 
 - **GitHub**: [github.com/anirudhthakur-07](https://github.com/anirudhthakur-07)
 - **Repository**: [LeadDesk-Mini](https://github.com/anirudhthakur-07/LeadDesk-Mini)
 
 ---
 
-## 12. License
+## 10. License
 
 Distributed under the **MIT License**. See `LICENSE` for details.
-
----
-
-## Final Security & Quality Verification Audit
-
-1. **Does the README expose any personal information?**: **NO** (Zero machine usernames, personal emails, or machine paths).
-2. **Does it expose any secrets?**: **NO** (Only placeholder values in `.env.example`).
-3. **Does it expose implementation details that attackers could use?**: **NO** (Internal middleware code, internal sanitization regex, rate limit numbers, and JWT payload internals are omitted).
-4. **Does it contain unnecessary external links?**: **NO** (Only official badges, repo links, and anchor links).
-5. **Does it reveal local machine information?**: **NO** (Zero local `C:\Users\` Windows paths).
-6. **Would you be comfortable making this repository public?**: **YES** (100% public-ready).
-7. **Would a Senior Engineering Manager approve this README?**: **YES** (Concise, structured, and production-grade).
