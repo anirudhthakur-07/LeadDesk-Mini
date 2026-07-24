@@ -31,9 +31,9 @@ export default function Footer() {
             href="https://digitalheroesco.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-white transition-colors text-zinc-400"
+            className="hover:text-white transition-colors text-indigo-300 font-medium"
           >
-            Digital Heroes Co.
+            Built for Digital Heroes Training Task
           </a>
         </div>
 
