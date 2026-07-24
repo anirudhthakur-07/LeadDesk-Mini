@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Logo from '@/components/ui/Logo';
 import { useToast } from '@/context/ToastContext';
-import { Shield, Mail, Lock, LogIn, AlertCircle, Loader2, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, LogIn, AlertCircle, Loader2, ArrowLeft } from 'lucide-react';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -68,9 +69,9 @@ export default function LoginPage() {
         {/* Architectural Login Card */}
         <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-8 sm:p-10 shadow-2xl backdrop-blur-md">
           {/* Logo Header */}
-          <div className="text-center mb-8">
-            <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-700/60 flex items-center justify-center mx-auto mb-3 text-white">
-              <Shield className="w-5 h-5 text-white" />
+          <div className="flex flex-col items-center justify-center text-center mb-8">
+            <div className="mb-4">
+              <Logo size="lg" href={null} showText={false} />
             </div>
             <h1 className="text-2xl font-semibold tracking-tight text-white">Admin Authentication</h1>
             <p className="text-xs text-zinc-400 mt-1 font-normal">Sign in to manage lead pipelines</p>
