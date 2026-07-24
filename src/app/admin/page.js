@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import { useToast } from '@/context/ToastContext';
 import AdminHeader from '@/components/AdminHeader';
 import MetricsBar from '@/components/MetricsBar';
 import SearchFilterBar from '@/components/SearchFilterBar';
@@ -11,6 +12,7 @@ import { sortLeads } from '@/utils/sorter';
 
 export default function AdminDashboard() {
   const router = useRouter();
+  const { addToast } = useToast();
   const [admin, setAdmin] = useState(null);
   const [leads, setLeads] = useState([]);
   const [metrics, setMetrics] = useState({ total: 0, newLeads: 0, contacted: 0, closed: 0 });
@@ -39,7 +41,7 @@ export default function AdminDashboard() {
   }, [router]);
 
   // Fetch active leads and summary metrics from backend
-  const fetchLeads = useCallback(async () => {
+  const fetchLeads = useCallback(async (isManualSync = false) => {
     try {
       setRefreshing(true);
       const res = await fetch('/api/leads');
@@ -52,14 +54,18 @@ export default function AdminDashboard() {
       if (data.success) {
         setLeads(data.data || []);
         setMetrics(data.metrics || { total: 0, newLeads: 0, contacted: 0, closed: 0 });
+        if (isManualSync) {
+          addToast('Pipeline synchronized with MongoDB Atlas', 'info', 3000);
+        }
       }
     } catch (err) {
       console.error('Fetch leads error:', err);
+      addToast('Failed to fetch lead pipeline data.', 'error', 4000);
     } finally {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [router]);
+  }, [router, addToast]);
 
   useEffect(() => {
     if (admin) {
@@ -105,10 +111,13 @@ export default function AdminDashboard() {
       });
 
       if (res.ok) {
+        addToast(`Lead status updated to ${newStatus}`, 'success', 3500);
         fetchLeads();
+      } else {
+        throw new Error('Failed to update status.');
       }
     } catch (err) {
-      console.error('Failed to update lead status:', err);
+      addToast(err.message || 'Error updating lead status', 'error', 4000);
     }
   };
 
@@ -120,10 +129,13 @@ export default function AdminDashboard() {
       });
 
       if (res.ok) {
+        addToast('Lead inquiry soft-deleted successfully', 'info', 3500);
         fetchLeads();
+      } else {
+        throw new Error('Failed to delete lead.');
       }
     } catch (err) {
-      console.error('Failed to delete lead:', err);
+      addToast(err.message || 'Error deleting lead', 'error', 4000);
     }
   };
 
@@ -138,16 +150,16 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
               <span>Leads Management</span>
               <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                Enterprise Analytics Active
+                Toast System Active
               </span>
             </h1>
             <p className="text-slate-400 text-sm mt-1">
-              Real-time pipeline analytics, instant search, multi-criteria sorting, and CSV data export.
+              Enterprise pipeline analytics, instant search, multi-criteria sorting, and toast notifications.
             </p>
           </div>
 
           <button
-            onClick={fetchLeads}
+            onClick={() => fetchLeads(true)}
             disabled={refreshing}
             className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-slate-900/60 text-xs font-semibold text-slate-300 hover:text-white hover:border-blue-500/40 transition-all duration-200"
           >

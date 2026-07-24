@@ -1,4 +1,5 @@
 import './globals.css';
+import { ToastProvider } from '@/context/ToastContext';
 
 export const metadata = {
   title: 'LeadDesk Digital | Premium Web Engineering & Lead Infrastructure',
@@ -18,7 +19,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="bg-dark-bg text-slate-100 min-h-screen flex flex-col font-sans antialiased">
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
   );

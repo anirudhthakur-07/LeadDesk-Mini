@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { BUDGET_RANGES } from '@/constants';
+import { useToast } from '@/context/ToastContext';
 import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default function LeadForm() {
+  const { addToast } = useToast();
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -13,7 +15,6 @@ export default function LeadForm() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState({ type: null, message: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +28,6 @@ export default function LeadForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setStatus({ type: null, message: '' });
 
     try {
       const res = await fetch('/api/leads', {
@@ -39,13 +39,10 @@ export default function LeadForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to submit lead. Please check your inputs.');
+        throw new Error(data.error || 'Failed to submit lead inquiry.');
       }
 
-      setStatus({
-        type: 'success',
-        message: 'Thank you! Your project inquiry has been received. Our agency team will reach out within 24 hours.',
-      });
+      addToast('Thank you! Your project inquiry has been received. Our agency team will reach out within 24 hours.', 'success', 5000);
 
       // Reset form on success
       setFormData({
@@ -55,10 +52,7 @@ export default function LeadForm() {
         message: '',
       });
     } catch (err) {
-      setStatus({
-        type: 'error',
-        message: err.message || 'An unexpected error occurred. Please try again.',
-      });
+      addToast(err.message || 'An unexpected error occurred. Please try again.', 'error', 6000);
     } finally {
       setLoading(false);
     }
@@ -181,24 +175,6 @@ export default function LeadForm() {
                     className="w-full rounded-xl border border-white/10 bg-slate-950/70 p-4 text-sm text-white placeholder-slate-500 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
                   />
                 </div>
-
-                {/* Status Toast Alert Banner */}
-                {status.type && (
-                  <div
-                    className={`flex items-start gap-3 rounded-xl border p-4 text-xs font-medium ${
-                      status.type === 'success'
-                        ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
-                        : 'border-rose-500/30 bg-rose-500/10 text-rose-300'
-                    }`}
-                  >
-                    {status.type === 'success' ? (
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    ) : (
-                      <AlertCircle className="h-4 w-4 text-rose-400 flex-shrink-0 mt-0.5" />
-                    )}
-                    <span>{status.message}</span>
-                  </div>
-                )}
 
                 {/* Submit Button */}
                 <button
