@@ -7,6 +7,22 @@
     @apply bg-[#07090E] text-slate-100 antialiased selection:bg-blue-500 selection:text-white;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
+
+  /* Prevent text insertion cursor bar from appearing when clicking headings, badges, and text UI */
+  h1, h2, h3, h4, h5, h6, p, span, button, a, div, label, svg {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Preserve standard text typing cursor for actual form inputs and textareas */
+  input, textarea {
+    -webkit-user-select: text !important;
+    -moz-user-select: text !important;
+    -ms-user-select: text !important;
+    user-select: text !important;
+  }
 }
 
 /* Custom Mesh Gradient & Ambient Glow Utilities */
