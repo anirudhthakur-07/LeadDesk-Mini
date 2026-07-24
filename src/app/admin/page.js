@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import AdminHeader from '@/components/AdminHeader';
 import MetricsBar from '@/components/MetricsBar';
 import SearchFilterBar from '@/components/SearchFilterBar';
 import LeadsTable from '@/components/LeadsTable';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Search } from 'lucide-react';
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -36,15 +36,11 @@ export default function AdminDashboard() {
     checkAuth();
   }, [router]);
 
-  // Fetch leads and summary metrics
+  // Fetch all active leads and summary metrics from backend
   const fetchLeads = useCallback(async () => {
     try {
       setRefreshing(true);
-      const params = new URLSearchParams();
-      if (search) params.set('search', search);
-      if (activeTab && activeTab !== 'All') params.set('status', activeTab);
-
-      const res = await fetch(`/api/leads?${params.toString()}`);
+      const res = await fetch('/api/leads');
       if (res.status === 401) {
         router.push('/login');
         return;
@@ -61,13 +57,37 @@ export default function AdminDashboard() {
       setLoading(false);
       setRefreshing(false);
     }
-  }, [search, activeTab, router]);
+  }, [router]);
 
   useEffect(() => {
     if (admin) {
       fetchLeads();
     }
   }, [admin, fetchLeads]);
+
+  // Instant Real-Time Multi-Field Search & Tab Filtering Logic (useMemo for 0ms latency)
+  const filteredLeads = useMemo(() => {
+    const query = search.trim().toLowerCase();
+
+    return leads.filter((lead) => {
+      // Status Tab Filter
+      if (activeTab !== 'All' && lead.status !== activeTab) {
+        return false;
+      }
+
+      // Empty search term matches all leads in active tab
+      if (!query) return true;
+
+      // Multi-Field Search Matching: Name, Email, Status, Budget, Message
+      const nameMatch = lead.fullName ? lead.fullName.toLowerCase().includes(query) : false;
+      const emailMatch = lead.email ? lead.email.toLowerCase().includes(query) : false;
+      const statusMatch = lead.status ? lead.status.toLowerCase().includes(query) : false;
+      const budgetMatch = lead.budgetRange ? lead.budgetRange.toLowerCase().includes(query) : false;
+      const messageMatch = lead.message ? lead.message.toLowerCase().includes(query) : false;
+
+      return nameMatch || emailMatch || statusMatch || budgetMatch || messageMatch;
+    });
+  }, [leads, search, activeTab]);
 
   // Update lead status live
   const handleUpdateStatus = async (id, newStatus) => {
@@ -102,47 +122,55 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-dark-bg text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#07090E] text-slate-100 flex flex-col">
       <AdminHeader adminEmail={admin?.email} />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Page Title & Refresh */}
-        <div className="flex items-center justify-between mb-8">
+        {/* Page Title & Sync Control */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight">Leads Dashboard</h1>
+            <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
+              <span>Leads Management</span>
+              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
+                Instant Search Active
+              </span>
+            </h1>
             <p className="text-slate-400 text-sm mt-1">
-              Real-time lead capture management, live search, and pipeline updates.
+              Real-time pipeline management with 0ms instant multi-field search and CSV export.
             </p>
           </div>
 
           <button
             onClick={fetchLeads}
             disabled={refreshing}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl glass-panel text-xs font-semibold text-slate-300 hover:text-white hover:border-brand-500/40 transition-all duration-200"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-slate-900/60 text-xs font-semibold text-slate-300 hover:text-white hover:border-blue-500/40 transition-all duration-200"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-brand-500' : ''}`} />
-            <span>Sync Live</span>
+            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-blue-400' : ''}`} />
+            <span>Sync DB</span>
           </button>
         </div>
 
         {/* Metrics Summary Bar */}
         <MetricsBar metrics={metrics} />
 
-        {/* Search & Filter Bar with Export */}
+        {/* Instant Search & Filter Bar */}
         <SearchFilterBar
           search={search}
           setSearch={setSearch}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          leads={leads}
+          leads={filteredLeads}
+          totalFilteredCount={filteredLeads.length}
         />
 
-        {/* Leads Table */}
+        {/* Leads Table with Memoized Filtered Leads */}
         <LeadsTable
-          leads={leads}
+          leads={filteredLeads}
           onUpdateLeadStatus={handleUpdateStatus}
           onDeleteLead={handleDeleteLead}
           loading={loading}
+          searchQuery={search}
+          onClearSearch={() => setSearch('')}
         />
       </main>
     </div>
