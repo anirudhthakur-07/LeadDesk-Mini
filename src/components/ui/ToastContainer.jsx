@@ -40,7 +40,7 @@ export default function ToastContainer({ toasts, onRemove }) {
     <div
       aria-live="polite"
       aria-atomic="true"
-      className="fixed top-5 right-5 sm:right-6 z-50 flex max-w-sm w-full flex-col gap-2 pointer-events-none"
+      className="fixed top-5 right-5 sm:right-6 z-60 flex max-w-sm w-full flex-col gap-2 pointer-events-none"
     >
       {toasts.map((toast) => {
         const theme = TOAST_THEMES[toast.type] || TOAST_THEMES.info;
@@ -52,10 +52,10 @@ export default function ToastContainer({ toasts, onRemove }) {
             role="status"
             className={`pointer-events-auto flex items-start justify-between gap-3 rounded-xl border ${theme.borderColor} ${theme.bgColor} p-4 shadow-2xl backdrop-blur-md transition-all duration-300 animate-in slide-in-from-top-5 fade-in`}
           >
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 min-w-0">
               <Icon className={`h-4 w-4 shrink-0 mt-0.5 ${theme.iconColor}`} />
-              <div className="space-y-0.5">
-                <p className={`text-xs font-medium ${theme.textColor}`}>
+              <div className="space-y-0.5 min-w-0">
+                <p className={`text-xs font-medium ${theme.textColor} break-words`}>
                   {toast.message}
                 </p>
               </div>
@@ -63,7 +63,7 @@ export default function ToastContainer({ toasts, onRemove }) {
 
             <button
               onClick={() => onRemove(toast.id)}
-              className="rounded-lg p-1 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors shrink-0"
+              className="rounded-lg p-1 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500/50"
               aria-label="Dismiss notification"
             >
               <X className="h-3.5 w-3.5" />

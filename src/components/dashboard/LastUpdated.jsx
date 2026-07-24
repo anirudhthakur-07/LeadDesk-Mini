@@ -30,7 +30,7 @@ export default function LastUpdated({ lastUpdatedTime }) {
   }, [lastUpdatedTime]);
 
   return (
-    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-400">
+    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-[11px] font-mono tabular-nums text-zinc-400 select-none">
       <Clock className="w-3 h-3 text-zinc-400 shrink-0" />
       <span>Updated {timeAgo}</span>
     </div>
