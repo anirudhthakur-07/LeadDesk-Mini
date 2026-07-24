@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Calendar, Mail, User, DollarSign, MessageSquare, Trash2, Loader2, Search, RefreshCw, XCircle } from 'lucide-react';
 import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal';
+import StatusSelector from '@/components/ui/StatusSelector';
 
 export default function LeadsTable({
   leads,
@@ -16,19 +17,6 @@ export default function LeadsTable({
   const [leadToDelete, setLeadToDelete] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState(null);
-
-  const getStatusBadgeClass = (status) => {
-    switch (status) {
-      case 'New':
-        return 'bg-blue-500/10 border-blue-500/30 text-blue-400';
-      case 'Contacted':
-        return 'bg-amber-500/10 border-amber-500/30 text-amber-400';
-      case 'Closed':
-        return 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400';
-      default:
-        return 'bg-slate-500/10 border-slate-500/30 text-slate-400';
-    }
-  };
 
   const handleStatusChange = async (id, newStatus) => {
     setUpdatingId(id);
@@ -168,31 +156,13 @@ export default function LeadsTable({
                     </div>
                   </td>
 
-                  {/* Status Dropdown */}
+                  {/* Custom Enterprise Status Selector */}
                   <td className="py-4 px-5 whitespace-nowrap">
-                    <div className="flex items-center gap-2">
-                      {updatingId === lead._id ? (
-                        <Loader2 className="w-4 h-4 text-blue-400 animate-spin" />
-                      ) : (
-                        <select
-                          value={lead.status}
-                          onChange={(e) => handleStatusChange(lead._id, e.target.value)}
-                          className={`px-3 py-1.5 rounded-xl border text-xs font-semibold uppercase tracking-wider cursor-pointer bg-slate-950 ${getStatusBadgeClass(
-                            lead.status
-                          )}`}
-                        >
-                          <option value="New" className="bg-slate-900 text-blue-400">
-                            New
-                          </option>
-                          <option value="Contacted" className="bg-slate-900 text-amber-400">
-                            Contacted
-                          </option>
-                          <option value="Closed" className="bg-slate-900 text-emerald-400">
-                            Closed
-                          </option>
-                        </select>
-                      )}
-                    </div>
+                    <StatusSelector
+                      status={lead.status}
+                      onChange={(newStatus) => handleStatusChange(lead._id, newStatus)}
+                      isUpdating={updatingId === lead._id}
+                    />
                   </td>
 
                   {/* Action Delete Trigger */}
@@ -212,7 +182,7 @@ export default function LeadsTable({
         </div>
       </div>
 
-      {/* Reusable Enterprise Delete Confirmation Modal */}
+      {/* Enterprise Delete Confirmation Modal */}
       <DeleteConfirmationModal
         isOpen={Boolean(leadToDelete)}
         lead={leadToDelete}
