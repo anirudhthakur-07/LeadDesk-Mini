@@ -2,13 +2,17 @@ import jwt from 'jsonwebtoken';
 import { cookies } from 'next/headers';
 import { COOKIE_NAME } from '@/constants';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'leaddesk_mini_fallback_secret_key_2026';
+const JWT_SECRET = process.env.JWT_SECRET;
 
 export function signToken(payload) {
+  if (!JWT_SECRET) {
+    throw new Error('CRITICAL SECURITY ERROR: JWT_SECRET environment variable is missing.');
+  }
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
 }
 
 export function verifyToken(token) {
+  if (!JWT_SECRET) return null;
   try {
     return jwt.verify(token, JWT_SECRET);
   } catch (error) {
