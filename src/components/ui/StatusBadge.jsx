@@ -8,9 +8,9 @@ export default function StatusBadge({ status, showFullLabel = false, className =
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold border backdrop-blur-md transition-all ${config.badgeBg} ${config.badgeText} ${config.badgeBorder} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-[11px] font-medium border backdrop-blur-md transition-all ${config.badgeBg} ${config.badgeText} ${config.badgeBorder} ${className}`}
     >
-      <Icon className="w-3.5 h-3.5 shrink-0" />
+      <Icon className="w-3 h-3 shrink-0" />
       <span>{showFullLabel ? config.label : config.shortLabel}</span>
     </span>
   );

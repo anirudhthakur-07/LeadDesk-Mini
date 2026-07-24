@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { BUDGET_RANGES } from '@/constants';
 import { useToast } from '@/context/ToastContext';
-import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
+import { Send, CheckCircle2, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default function LeadForm() {
   const { addToast } = useToast();
@@ -59,56 +59,56 @@ export default function LeadForm() {
   };
 
   return (
-    <section id="capture-lead" className="relative py-20 bg-mesh-radial">
+    <section id="capture-lead" className="py-20 border-b border-zinc-800/60 bg-[#09090B]">
       <div className="mx-auto max-w-7xl px-6">
         
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           
           {/* Left Column: Form Intro & Agency Promise */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3.5 py-1.5 text-xs font-semibold text-blue-400">
-              <Sparkles className="h-3.5 w-3.5" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-3.5 py-1 text-xs font-medium text-zinc-400">
+              <Sparkles className="h-3.5 w-3.5 text-zinc-300" />
               <span>Start Your Project</span>
             </div>
 
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl leading-tight">
+            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl leading-tight">
               Ready To Scale Your Digital Infrastructure?
             </h2>
 
-            <p className="text-sm text-slate-300 leading-relaxed">
+            <p className="text-sm text-zinc-400 leading-relaxed font-normal">
               Submit your inquiry details below. Our technical team evaluates project requirements and responds with a strategic roadmap within one business day.
             </p>
 
-            <div className="space-y-4 pt-2 text-xs text-slate-300">
-              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-slate-900/60 p-3.5">
-                <ShieldCheck className="h-5 w-5 text-blue-400 flex-shrink-0" />
+            <div className="space-y-3 pt-2 text-xs text-zinc-400">
+              <div className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/60 p-3.5">
+                <ShieldCheck className="h-5 w-5 text-zinc-300 flex-shrink-0" />
                 <div>
                   <span className="font-semibold text-white block">Strict Data Privacy</span>
-                  <span className="text-slate-400">Encrypted in transit and at rest with zero data sharing.</span>
+                  <span className="text-zinc-500">Encrypted in transit and at rest with zero data sharing.</span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-slate-900/60 p-3.5">
+              <div className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/60 p-3.5">
                 <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
                 <div>
                   <span className="font-semibold text-white block">Guaranteed SLA Response</span>
-                  <span className="text-slate-400">Direct evaluation by senior full-stack architects.</span>
+                  <span className="text-zinc-500">Direct evaluation by senior full-stack architects.</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Premium Split Glass Form Card */}
+          {/* Right Column: Architectural Form Card */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-3xl border border-white/15 bg-slate-900/80 p-8 shadow-2xl backdrop-blur-2xl">
+            <div className="relative rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-8 shadow-2xl backdrop-blur-md">
               
               <form onSubmit={handleSubmit} className="space-y-6">
                 
                 {/* Full Name & Email Fields */}
                 <div className="grid gap-6 sm:grid-cols-2">
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold text-slate-200">
-                      Full Name <span className="text-blue-400">*</span>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-zinc-400 block">
+                      Full Name <span className="text-zinc-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -117,13 +117,13 @@ export default function LeadForm() {
                       onChange={handleChange}
                       required
                       placeholder="e.g. Sarah Jenkins"
-                      className="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                      className="w-full rounded-lg border border-zinc-800 bg-[#0D0E11] px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 transition-all focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-400/20"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold text-slate-200">
-                      Work Email <span className="text-blue-400">*</span>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-zinc-400 block">
+                      Work Email <span className="text-zinc-500">*</span>
                     </label>
                     <input
                       type="email"
@@ -132,38 +132,41 @@ export default function LeadForm() {
                       onChange={handleChange}
                       required
                       placeholder="sarah@company.com"
-                      className="w-full rounded-xl border border-white/10 bg-slate-950/70 px-4 py-3 text-sm text-white placeholder-slate-500 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                      className="w-full rounded-lg border border-zinc-800 bg-[#0D0E11] px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 transition-all focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-400/20"
                     />
                   </div>
                 </div>
 
-                {/* Custom Budget Selection Cards */}
+                {/* Interactive Budget Pill Buttons */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-200">
-                    Estimated Project Budget <span className="text-blue-400">*</span>
+                  <label className="text-xs font-medium text-zinc-400 block">
+                    Estimated Project Budget <span className="text-zinc-500">*</span>
                   </label>
                   <div className="grid grid-cols-3 gap-3 pt-1">
-                    {BUDGET_RANGES.map((range) => (
-                      <button
-                        key={range}
-                        type="button"
-                        onClick={() => handleBudgetSelect(range)}
-                        className={`rounded-xl border p-3 text-center transition-all ${
-                          formData.budgetRange === range
-                            ? 'border-blue-500 bg-blue-500/15 text-blue-300 font-semibold shadow-lg shadow-blue-500/10'
-                            : 'border-white/10 bg-slate-950/60 text-slate-400 hover:border-white/20 hover:text-white'
-                        }`}
-                      >
-                        <span className="block text-xs">{range}</span>
-                      </button>
-                    ))}
+                    {BUDGET_RANGES.map((range) => {
+                      const isSelected = formData.budgetRange === range;
+                      return (
+                        <button
+                          key={range}
+                          type="button"
+                          onClick={() => handleBudgetSelect(range)}
+                          className={`rounded-lg border p-3 text-center transition-all ${
+                            isSelected
+                              ? 'bg-zinc-800 border-zinc-600 text-white font-medium shadow-inner'
+                              : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                          }`}
+                        >
+                          <span className="block text-xs font-mono">{range}</span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 
                 {/* Project Message */}
-                <div className="space-y-2">
-                  <label className="text-xs font-semibold text-slate-200">
-                    Project Details & Goals <span className="text-blue-400">*</span>
+                <div className="space-y-1.5">
+                  <label className="text-xs font-medium text-zinc-400 block">
+                    Project Details & Goals <span className="text-zinc-500">*</span>
                   </label>
                   <textarea
                     name="message"
@@ -172,24 +175,24 @@ export default function LeadForm() {
                     onChange={handleChange}
                     required
                     placeholder="Describe your web engineering, agency audit, or custom SaaS development goals..."
-                    className="w-full rounded-xl border border-white/10 bg-slate-950/70 p-4 text-sm text-white placeholder-slate-500 transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                    className="w-full rounded-lg border border-zinc-800 bg-[#0D0E11] p-3.5 text-sm text-white placeholder-zinc-500 transition-all focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-400/20"
                   />
                 </div>
 
-                {/* Submit Button */}
+                {/* Primary Submit Button: Solid Crisp White */}
                 <button
                   type="submit"
                   disabled={loading}
-                  className="group relative flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-4 text-sm font-semibold text-white shadow-xl shadow-blue-500/25 transition-all duration-300 hover:shadow-blue-500/40 hover:scale-[1.01] disabled:opacity-50"
+                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-sm font-medium text-zinc-950 shadow-sm transition-all hover:bg-zinc-200 active:scale-[0.99] disabled:opacity-50"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
+                      <Loader2 className="h-4 w-4 animate-spin text-zinc-950" />
                       <span>Processing Inquiry...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                      <Send className="h-4 w-4 text-zinc-950" />
                       <span>Submit Inquiry to Agency</span>
                     </>
                   )}

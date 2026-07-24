@@ -8,7 +8,6 @@ import MetricsBar from '@/components/MetricsBar';
 import SearchFilterBar from '@/components/SearchFilterBar';
 import LeadsTable from '@/components/LeadsTable';
 import DashboardToolbar from '@/components/dashboard/DashboardToolbar';
-import { RefreshCw } from 'lucide-react';
 import { sortLeads } from '@/utils/sorter';
 
 export default function AdminDashboard() {
@@ -143,21 +142,21 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#07090E] text-slate-100 flex flex-col">
+    <div className="min-h-screen bg-[#09090B] bg-ambient-top text-zinc-100 flex flex-col">
       <AdminHeader adminEmail={admin?.email} />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Page Title & Operational Control */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
+            <h1 className="text-3xl font-semibold text-white tracking-tight flex items-center gap-3">
               <span>Leads Management</span>
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                Quick Actions Active
+              <span className="text-[10px] font-mono font-medium px-2 py-0.5 rounded bg-zinc-800 border border-zinc-700/60 text-zinc-400 uppercase tracking-wider">
+                Enterprise Pipeline Active
               </span>
             </h1>
-            <p className="text-slate-400 text-sm mt-1">
-              Enterprise pipeline control center with real-time sync, active filter indicators, and export tools.
+            <p className="text-zinc-400 text-sm mt-1 font-normal">
+              Real-time pipeline control center with instant search, multi-criteria sorting, and export tools.
             </p>
           </div>
         </div>

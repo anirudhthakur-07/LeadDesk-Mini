@@ -2,7 +2,7 @@ import { Sparkles, MessageSquare, Award, CheckCircle2, Archive, HelpCircle } fro
 
 /**
  * Enterprise Status Configuration Registry for LeadDesk Mini
- * Defines color palettes, icon mappings, badges, and priority weights.
+ * Refined Monochromatic / Muted Indicator Palette (Linear / Raycast Aesthetic)
  */
 
 export const STATUS_CONFIG = {
@@ -10,11 +10,11 @@ export const STATUS_CONFIG = {
     label: 'New Inquiry',
     shortLabel: 'New',
     icon: Sparkles,
-    badgeBg: 'bg-blue-500/10',
-    badgeText: 'text-blue-400',
-    badgeBorder: 'border-blue-500/30',
-    hoverBg: 'hover:bg-blue-500/20',
-    glowColor: 'shadow-blue-500/20',
+    badgeBg: 'bg-teal-500/10',
+    badgeText: 'text-teal-300',
+    badgeBorder: 'border-teal-500/20',
+    hoverBg: 'hover:bg-teal-500/20',
+    glowColor: 'shadow-teal-500/5',
     weight: 1,
   },
   Contacted: {
@@ -22,21 +22,21 @@ export const STATUS_CONFIG = {
     shortLabel: 'Contacted',
     icon: MessageSquare,
     badgeBg: 'bg-amber-500/10',
-    badgeText: 'text-amber-400',
-    badgeBorder: 'border-amber-500/30',
+    badgeText: 'text-amber-300',
+    badgeBorder: 'border-amber-500/20',
     hoverBg: 'hover:bg-amber-500/20',
-    glowColor: 'shadow-amber-500/20',
+    glowColor: 'shadow-amber-500/5',
     weight: 2,
   },
   Qualified: {
     label: 'Qualified Lead',
     shortLabel: 'Qualified',
     icon: Award,
-    badgeBg: 'bg-purple-500/10',
-    badgeText: 'text-purple-400',
-    badgeBorder: 'border-purple-500/30',
-    hoverBg: 'hover:bg-purple-500/20',
-    glowColor: 'shadow-purple-500/20',
+    badgeBg: 'bg-indigo-500/10',
+    badgeText: 'text-indigo-300',
+    badgeBorder: 'border-indigo-500/20',
+    hoverBg: 'hover:bg-indigo-500/20',
+    glowColor: 'shadow-indigo-500/5',
     weight: 3,
   },
   Closed: {
@@ -44,21 +44,21 @@ export const STATUS_CONFIG = {
     shortLabel: 'Closed',
     icon: CheckCircle2,
     badgeBg: 'bg-emerald-500/10',
-    badgeText: 'text-emerald-400',
-    badgeBorder: 'border-emerald-500/30',
+    badgeText: 'text-emerald-300',
+    badgeBorder: 'border-emerald-500/20',
     hoverBg: 'hover:bg-emerald-500/20',
-    glowColor: 'shadow-emerald-500/20',
+    glowColor: 'shadow-emerald-500/5',
     weight: 4,
   },
   Archived: {
     label: 'Archived Lead',
     shortLabel: 'Archived',
     icon: Archive,
-    badgeBg: 'bg-slate-500/10',
-    badgeText: 'text-slate-400',
-    badgeBorder: 'border-slate-500/30',
-    hoverBg: 'hover:bg-slate-500/20',
-    glowColor: 'shadow-slate-500/20',
+    badgeBg: 'bg-zinc-800/60',
+    badgeText: 'text-zinc-400',
+    badgeBorder: 'border-zinc-700/50',
+    hoverBg: 'hover:bg-zinc-800',
+    glowColor: 'shadow-zinc-800/5',
     weight: 5,
   },
 };
@@ -68,11 +68,11 @@ export const DEFAULT_STATUS_CONFIG = {
   label: 'Unknown',
   shortLabel: 'Unknown',
   icon: HelpCircle,
-  badgeBg: 'bg-slate-500/10',
-  badgeText: 'text-slate-400',
-  badgeBorder: 'border-slate-500/30',
-  hoverBg: 'hover:bg-slate-500/20',
-  glowColor: 'shadow-slate-500/20',
+  badgeBg: 'bg-zinc-800/60',
+  badgeText: 'text-zinc-400',
+  badgeBorder: 'border-zinc-700/50',
+  hoverBg: 'hover:bg-zinc-800',
+  glowColor: 'shadow-zinc-800/5',
   weight: 99,
 };
 

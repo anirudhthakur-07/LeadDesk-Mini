@@ -1,7 +1,5 @@
 'use client';
 
-import { ReactNode } from 'react';
-
 export default function EmptyState({
   icon: Icon,
   title,
@@ -16,21 +14,21 @@ export default function EmptyState({
     <div
       role="region"
       aria-label={title}
-      className="glass-panel rounded-3xl border border-white/10 p-12 sm:p-16 text-center flex flex-col items-center justify-center space-y-6 animate-in fade-in zoom-in-95 duration-200 shadow-2xl"
+      className="rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-12 sm:p-16 text-center flex flex-col items-center justify-center space-y-5 animate-in fade-in zoom-in-95 duration-200 shadow-sm backdrop-blur-md"
     >
       {/* Visual Illustration or Icon Badge */}
       {illustration ? (
-        <div className="mb-2">{illustration}</div>
+        <div className="mb-1">{illustration}</div>
       ) : Icon ? (
-        <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 shadow-lg shadow-blue-500/10">
-          <Icon className="h-8 w-8" />
+        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300">
+          <Icon className="h-6 w-6" />
         </div>
       ) : null}
 
       {/* Typography & Guidance Copy */}
-      <div className="max-w-md space-y-2">
-        <h3 className="text-xl font-bold tracking-tight text-white">{title}</h3>
-        <p className="text-xs text-slate-400 leading-relaxed">{description}</p>
+      <div className="max-w-md space-y-1.5">
+        <h3 className="text-lg font-semibold tracking-tight text-white">{title}</h3>
+        <p className="text-xs text-zinc-400 leading-relaxed font-normal">{description}</p>
       </div>
 
       {/* Action CTA Buttons */}
@@ -39,7 +37,7 @@ export default function EmptyState({
           {actionLabel && onAction && (
             <button
               onClick={onAction}
-              className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-5 py-2.5 text-xs font-semibold text-white shadow-xl shadow-blue-500/20 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-4 py-2.5 text-xs font-medium text-zinc-950 shadow-sm transition-all hover:bg-zinc-200 active:scale-[0.99]"
             >
               <span>{actionLabel}</span>
             </button>
@@ -48,7 +46,7 @@ export default function EmptyState({
           {secondaryActionLabel && onSecondaryAction && (
             <button
               onClick={onSecondaryAction}
-              className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-slate-900/60 px-5 py-2.5 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800 transition-all duration-200"
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2.5 text-xs font-medium text-zinc-300 hover:text-white hover:bg-zinc-800 transition-all"
             >
               <span>{secondaryActionLabel}</span>
             </button>

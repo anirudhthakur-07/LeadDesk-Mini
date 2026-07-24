@@ -6,14 +6,11 @@ import { SORT_OPTIONS } from '@/utils/sorter';
 
 export default function SortControl({ currentSort, onSortChange }) {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef(null);
+  const dropdownRef = useRef(null);
 
-  const activeOption = SORT_OPTIONS.find((opt) => opt.id === currentSort) || SORT_OPTIONS[0];
-
-  // Close dropdown on click outside or Esc key
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setIsOpen(false);
       }
     };
@@ -29,39 +26,40 @@ export default function SortControl({ currentSort, onSortChange }) {
     };
   }, []);
 
-  const handleSelect = (optionId) => {
-    onSortChange(optionId);
+  const currentOption = SORT_OPTIONS.find((opt) => opt.id === currentSort) || SORT_OPTIONS[0];
+
+  const handleSelect = (sortId) => {
+    onSortChange(sortId);
     setIsOpen(false);
   };
 
   return (
-    <div className="relative inline-block text-left" ref={menuRef}>
+    <div className="relative inline-block text-left" ref={dropdownRef}>
       {/* Trigger Button */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-label="Sort leads by criteria"
-        className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-white/10 bg-slate-900/80 text-xs font-semibold text-slate-300 hover:text-white hover:border-blue-500/40 transition-all shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 whitespace-nowrap"
+        aria-label="Sort leads"
+        className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg border border-zinc-800 bg-zinc-900 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 transition-all shadow-sm focus:outline-none focus:ring-1 focus:ring-zinc-400/20"
       >
-        <ArrowUpDown className="w-3.5 h-3.5 text-blue-400" />
-        <span className="text-slate-400">Sort:</span>
-        <span className="text-white font-bold">{activeOption.label}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-blue-400' : ''}`} />
+        <ArrowUpDown className="w-3.5 h-3.5 text-zinc-400" />
+        <span>Sort: {currentOption.shortLabel}</span>
+        <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {/* Animated Dropdown Panel */}
+      {/* Glassmorphic Dropdown Panel */}
       {isOpen && (
         <div
           role="listbox"
-          className="absolute right-0 mt-2 w-64 rounded-2xl border border-white/15 bg-slate-950/95 p-2 shadow-2xl backdrop-blur-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute right-0 mt-2 w-56 rounded-xl border border-zinc-800 bg-[#0D0E11] p-1.5 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
         >
-          <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 border-b border-white/10 mb-1">
-            Sort Leads By
+          <div className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-500 border-b border-zinc-800/80 mb-1">
+            Sort Pipeline By
           </div>
 
-          <div className="space-y-0.5 max-h-72 overflow-y-auto">
+          <div className="space-y-0.5">
             {SORT_OPTIONS.map((option) => {
               const isSelected = option.id === currentSort;
               return (
@@ -71,14 +69,17 @@ export default function SortControl({ currentSort, onSortChange }) {
                   role="option"
                   aria-selected={isSelected}
                   onClick={() => handleSelect(option.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-xs text-left transition-all ${
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
                     isSelected
-                      ? 'bg-blue-500/15 text-blue-400 font-bold border border-blue-500/30'
-                      : 'text-slate-300 hover:bg-slate-900 hover:text-white'
+                      ? 'bg-zinc-800 text-white font-semibold'
+                      : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-white'
                   }`}
                 >
-                  <span>{option.label}</span>
-                  {isSelected && <Check className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
+                  <div className="flex flex-col text-left">
+                    <span>{option.label}</span>
+                    <span className="text-[10px] text-zinc-500 font-normal">{option.description}</span>
+                  </div>
+                  {isSelected && <Check className="w-3.5 h-3.5 text-white shrink-0 ml-2" />}
                 </button>
               );
             })}

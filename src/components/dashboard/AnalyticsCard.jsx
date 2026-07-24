@@ -1,26 +1,38 @@
 'use client';
 
+import Skeleton from '@/components/skeleton/Skeleton';
+
 export default function AnalyticsCard({
   title,
   value,
   subtitle,
-  icon: Icon,
   badgeText,
-  badgeColor = 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-  iconColor = 'text-blue-400',
-  iconBg = 'bg-blue-500/10 border-blue-500/20',
-  borderColor = 'border-white/10 hover:border-blue-500/30',
+  badgeVariant = 'neutral',
+  icon: Icon,
   loading = false,
 }) {
+  const getBadgeStyle = (variant) => {
+    switch (variant) {
+      case 'info':
+        return 'bg-teal-500/10 text-teal-300 border-teal-500/20';
+      case 'warning':
+        return 'bg-amber-500/10 text-amber-300 border-amber-500/20';
+      case 'success':
+        return 'bg-emerald-500/10 text-emerald-300 border-emerald-500/20';
+      default:
+        return 'bg-zinc-800/60 text-zinc-400 border-zinc-700/50';
+    }
+  };
+
   if (loading) {
     return (
-      <div className="rounded-2xl border border-white/10 bg-slate-900/60 p-6 backdrop-blur-xl animate-pulse space-y-4">
+      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-5 shadow-sm space-y-3">
         <div className="flex items-center justify-between">
-          <div className="h-3 w-24 rounded bg-slate-800" />
-          <div className="h-10 w-10 rounded-xl bg-slate-800" />
+          <Skeleton className="h-4 w-24 bg-zinc-800" />
+          <Skeleton className="h-7 w-7 rounded-lg bg-zinc-800" />
         </div>
-        <div className="h-8 w-16 rounded bg-slate-800" />
-        <div className="h-3 w-32 rounded bg-slate-800" />
+        <Skeleton className="h-8 w-16 bg-zinc-800" />
+        <Skeleton className="h-3 w-32 bg-zinc-800" />
       </div>
     );
   }
@@ -29,36 +41,43 @@ export default function AnalyticsCard({
     <div
       role="region"
       aria-label={`${title} Analytics Card`}
-      className={`group relative rounded-2xl border bg-slate-900/70 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${borderColor}`}
+      className="group relative rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-5 shadow-sm backdrop-blur-md transition-all duration-200 hover:border-zinc-700 hover:bg-zinc-800/40"
     >
-      {/* Card Header: Title & Icon */}
-      <div className="flex items-center justify-between mb-3">
-        <span className="text-xs font-bold uppercase tracking-wider text-slate-400 group-hover:text-slate-200 transition-colors">
+      {/* Header: Title & Icon */}
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <span className="text-xs font-medium text-zinc-400 uppercase tracking-wider">
           {title}
         </span>
-        <div className={`flex h-11 w-11 items-center justify-center rounded-xl border ${iconBg} ${iconColor} transition-transform duration-300 group-hover:scale-110`}>
-          <Icon className="h-5.5 w-5.5" />
-        </div>
+        {Icon && (
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-300">
+            <Icon className="h-4 w-4" />
+          </div>
+        )}
       </div>
 
-      {/* Large Metric Display */}
-      <div className="flex items-baseline gap-2 mb-2">
-        <span className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-          {typeof value === 'number' ? value.toLocaleString() : value}
-        </span>
-      </div>
+      {/* Metric Display */}
+      <div className="flex items-baseline justify-between gap-2">
+        <h3 className="text-3xl font-semibold tracking-tight text-white">
+          {value}
+        </h3>
 
-      {/* Subtitle & Badge Row */}
-      <div className="flex items-center justify-between gap-2 pt-1 border-t border-white/5">
-        <p className="text-xs text-slate-400 line-clamp-1">
-          {subtitle}
-        </p>
         {badgeText && (
-          <span className={`inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-semibold border ${badgeColor} shrink-0`}>
+          <span
+            className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-medium ${getBadgeStyle(
+              badgeVariant
+            )}`}
+          >
             {badgeText}
           </span>
         )}
       </div>
+
+      {/* Subtitle / Context */}
+      {subtitle && (
+        <p className="mt-2 text-xs font-normal text-zinc-400 truncate">
+          {subtitle}
+        </p>
+      )}
     </div>
   );
 }

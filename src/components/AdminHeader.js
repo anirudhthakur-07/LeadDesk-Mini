@@ -2,54 +2,60 @@
 
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { Sparkles, LogOut, UserCheck } from 'lucide-react';
+import { LogOut, Shield, User } from 'lucide-react';
 
 export default function AdminHeader({ adminEmail }) {
   const router = useRouter();
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      router.push('/login');
-      router.refresh();
+      const res = await fetch('/api/auth/logout', { method: 'POST' });
+      if (res.ok) {
+        router.push('/login');
+        router.refresh();
+      }
     } catch (error) {
       console.error('Logout error:', error);
     }
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full glass-panel border-b border-dark-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Brand Logo */}
-        <Link href="/admin" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center shadow-glow">
-            <Sparkles className="w-5 h-5 text-white" />
-          </div>
-          <div>
-            <span className="text-xl font-extrabold tracking-tight text-white">
-              LeadDesk Admin
+    <header className="border-b border-zinc-800/80 bg-[#09090B]/90 backdrop-blur-md sticky top-0 z-40">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        
+        {/* Brand & Portal Title */}
+        <div className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-lg bg-zinc-900 border border-zinc-700/60 flex items-center justify-center text-white">
+              <Shield className="w-4 h-4" />
+            </div>
+            <span className="font-semibold text-white tracking-tight text-sm">
+              LeadDesk <span className="text-[10px] font-mono font-normal px-1.5 py-0.5 rounded bg-zinc-800 border border-zinc-700/60 text-zinc-400">ADMIN</span>
             </span>
-            <span className="text-xs font-semibold text-brand-500 block -mt-1 tracking-wider uppercase">
-              Management Suite
-            </span>
-          </div>
-        </Link>
+          </Link>
+          <span className="text-zinc-700 font-mono">/</span>
+          <span className="text-xs font-medium text-zinc-400">CRM Pipeline Control</span>
+        </div>
 
-        {/* Right Section: Admin Badge & Logout */}
+        {/* User Info & Logout CTA */}
         <div className="flex items-center gap-4">
-          <div className="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 border border-slate-700/60 text-xs font-medium text-slate-300">
-            <UserCheck className="w-3.5 h-3.5 text-emerald-400" />
-            <span>{adminEmail || 'admin@leaddesk.com'}</span>
-          </div>
+          {adminEmail && (
+            <div className="hidden sm:flex items-center gap-2 text-xs font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-lg">
+              <User className="w-3.5 h-3.5 text-zinc-400" />
+              <span>{adminEmail}</span>
+            </div>
+          )}
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white px-4 py-2 rounded-xl bg-slate-900/60 hover:bg-rose-500/20 border border-dark-border hover:border-rose-500/40 transition-all duration-200"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
+            title="Sign out of admin session"
           >
-            <LogOut className="w-4 h-4 text-rose-400" />
+            <LogOut className="w-3.5 h-3.5 text-zinc-400" />
             <span>Logout</span>
           </button>
         </div>
+
       </div>
     </header>
   );
