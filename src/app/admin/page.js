@@ -138,11 +138,11 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
               <span>Leads Management</span>
               <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                Live Search & Sort Active
+                Enterprise Analytics Active
               </span>
             </h1>
             <p className="text-slate-400 text-sm mt-1">
-              Enterprise pipeline management with 0ms instant search, multi-criteria sorting, and CSV export.
+              Real-time pipeline analytics, instant search, multi-criteria sorting, and CSV data export.
             </p>
           </div>
 
@@ -156,8 +156,8 @@ export default function AdminDashboard() {
           </button>
         </div>
 
-        {/* Metrics Summary Bar */}
-        <MetricsBar metrics={metrics} />
+        {/* Enterprise CRM Analytics Dashboard Grid */}
+        <MetricsBar metrics={metrics} leads={leads} loading={loading} />
 
         {/* Instant Search, Multi-Criteria Sort & Filter Bar */}
         <SearchFilterBar
