@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Mail, User, DollarSign, MessageSquare, Trash2, Search, RefreshCw, XCircle } from 'lucide-react';
+import { Calendar, Mail, User, DollarSign, MessageSquare, Trash2, Search, RefreshCw, Layers, Inbox } from 'lucide-react';
 import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal';
 import StatusSelector from '@/components/ui/StatusSelector';
 import TableSkeleton from '@/components/skeleton/TableSkeleton';
+import EmptyState from '@/components/empty/EmptyState';
 
 export default function LeadsTable({
   leads,
@@ -51,35 +52,29 @@ export default function LeadsTable({
     return <TableSkeleton rows={5} />;
   }
 
-  // Elegant No Results Empty State
+  // Enterprise Empty State 1: Search Query returns 0 matches
+  if (searchQuery && (!leads || leads.length === 0)) {
+    return (
+      <EmptyState
+        icon={Search}
+        title={`No matching leads found for "${searchQuery}"`}
+        description="We searched across full names, work email addresses, lead statuses, budget ranges, and project messages. Try refining your keywords."
+        actionLabel="Clear Search Filter"
+        onAction={onClearSearch}
+      />
+    );
+  }
+
+  // Enterprise Empty State 2: Database zero lead state
   if (!leads || leads.length === 0) {
     return (
-      <div className="glass-panel p-16 rounded-2xl border border-white/10 text-center flex flex-col items-center justify-center space-y-4">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 border border-white/10 text-slate-400 shadow-inner">
-          {searchQuery ? <Search className="w-7 h-7 text-blue-400" /> : <XCircle className="w-7 h-7 text-slate-500" />}
-        </div>
-
-        <div className="max-w-md space-y-1">
-          <h3 className="text-lg font-bold text-white">
-            {searchQuery ? `No matching leads for "${searchQuery}"` : 'No lead records available'}
-          </h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
-            {searchQuery
-              ? 'We searched across full names, email addresses, lead statuses, budget ranges, and project messages.'
-              : 'New inquiry submissions will automatically populate here in real-time.'}
-          </p>
-        </div>
-
-        {searchQuery && onClearSearch && (
-          <button
-            onClick={onClearSearch}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 text-blue-400 text-xs font-semibold transition-all hover:scale-[1.02]"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span>Reset Search Filter</span>
-          </button>
-        )}
-      </div>
+      <EmptyState
+        icon={Inbox}
+        title="No Lead Inquiries Available"
+        description="Your agency lead pipeline is currently empty. New project submissions from your public landing page will automatically populate here in real-time."
+        actionLabel="Go to Landing Page Form"
+        onAction={() => (window.location.href = '/#capture-lead')}
+      />
     );
   }
 
