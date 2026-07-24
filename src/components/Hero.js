@@ -1,155 +1,162 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowRight, Lock, CheckCircle, Database, Shield } from 'lucide-react';
+import { ArrowRight, Lock, Globe, Shield, CheckCircle, Database } from 'lucide-react';
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden pt-16 pb-24 border-b border-zinc-800/60 bg-ambient-top">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="relative overflow-hidden pt-16 pb-24 border-b border-zinc-800/60 bg-[#09090B]">
+      
+      {/* Top-Center Ambient Light Beam */}
+      <div 
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(120, 119, 198, 0.15), rgba(255, 255, 255, 0))',
+        }}
+      />
+
+      {/* Fine Radial Dot Grid Background Pattern */}
+      <div 
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-40"
+      />
+
+      <div className="relative mx-auto max-w-7xl px-6 z-10">
         
-        {/* Asymmetrical Split Layout: Left Content & Right Live Preview */}
+        {/* Asymmetrical 12-Column Grid: Left (7 Cols) & Right (5 Cols) */}
         <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
           
-          {/* Left Column: Refined Typography & Headline */}
-          <div className="lg:col-span-6 space-y-6">
+          {/* Left Column (7 Columns): Announcement, Headline, CTAs, SLA Metrics */}
+          <div className="lg:col-span-7 space-y-6">
             
-            {/* Monochromatic Pill Badge */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/80 px-3.5 py-1 text-xs font-medium text-zinc-300 shadow-sm backdrop-blur-md">
-              <span className="flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-              <span>Enterprise Lead Infrastructure</span>
-              <span className="text-zinc-500">•</span>
-              <span className="text-zinc-400">v1.0 Production</span>
+            {/* Announcement Micro Pill Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-zinc-900/80 border border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200 transition-all duration-150 cursor-pointer shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>v1.0 Production Release</span>
+              <span className="text-zinc-500 font-normal">→</span>
             </div>
 
-            {/* Refined Rich Linear Gradient Title */}
-            <h1 className="text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.1] text-white">
-              Capture High-Value Leads With{' '}
-              <span className="bg-gradient-to-b from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
-                Zero Friction.
+            {/* Main Headline with Dual-Tone Metal & Indigo Accent Gradient */}
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-left leading-[1.1] text-white">
+              <span className="bg-gradient-to-b from-white via-zinc-200 to-zinc-500 bg-clip-text text-transparent block">
+                Capture High-Value Leads
+              </span>
+              <span className="block mt-1">
+                With{' '}
+                <span className="bg-gradient-to-r from-indigo-200 via-indigo-300 to-indigo-500 bg-clip-text text-transparent">
+                  Zero Friction.
+                </span>
               </span>
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-xl font-normal">
+            {/* Subtitle Copy */}
+            <p className="text-base sm:text-lg text-zinc-400 max-w-xl font-normal leading-relaxed mt-4 mb-8">
               Elevate your agency pipeline. LeadDesk Mini validates inquiries in real-time, isolates data with enterprise-grade encryption, and delivers live analytics to your admin dashboard.
             </p>
 
-            {/* Feature Highlights Grid */}
-            <div className="grid grid-cols-2 gap-3 pt-2 text-xs text-zinc-400">
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-zinc-300" />
-                <span>Real-Time Validation</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-zinc-300" />
-                <span>JWT Cookie Security</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Database className="h-4 w-4 text-zinc-300" />
-                <span>Soft Delete Retention</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4 text-zinc-300" />
-                <span>1-Click CSV Export</span>
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4">
+            {/* Primary & Secondary Action CTAs */}
+            <div className="flex flex-wrap items-center gap-3.5">
               <a
                 href="#capture-lead"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-medium text-zinc-950 shadow-sm transition-all hover:bg-zinc-200 active:scale-[0.99]"
+                className="bg-white text-zinc-950 font-semibold hover:bg-zinc-200 px-5 py-2.5 rounded-lg text-sm shadow-md shadow-[0_1px_10px_rgba(255,255,255,0.2)] transition-all duration-150 ease-out active:scale-[0.98] flex items-center gap-2"
               >
                 <span>Submit Lead Inquiry</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="w-4 h-4 text-zinc-950" />
               </a>
 
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-zinc-800 bg-zinc-900/80 px-5 py-3 text-sm font-medium text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
+                className="bg-zinc-900 text-zinc-300 border border-zinc-800 hover:border-zinc-700 hover:text-white hover:bg-zinc-800/80 px-5 py-2.5 rounded-lg text-sm transition-all duration-150 flex items-center gap-2"
               >
-                <Lock className="h-4 w-4 text-zinc-400" />
+                <Lock className="w-4 h-4 text-zinc-400" />
                 <span>Live Admin Portal</span>
               </Link>
             </div>
 
-            {/* Trust Metrics */}
-            <div className="flex items-center gap-8 pt-6 border-t border-zinc-800/80 text-xs text-zinc-400">
+            {/* SLA Trust Micro-Metrics Bar */}
+            <div className="mt-10 pt-6 border-t border-zinc-800/60 flex items-center gap-8 text-xs text-zinc-400">
               <div>
-                <span className="block text-base font-semibold text-white tracking-tight">99.9%</span>
-                <span className="text-[11px] text-zinc-500 font-normal">Uptime SLA</span>
+                <span className="text-zinc-100 font-semibold text-sm block">99.9%</span>
+                <span className="text-zinc-500 font-normal text-xs block">Uptime SLA</span>
               </div>
-              <div className="h-8 w-px bg-zinc-800" />
+              <div className="h-8 w-px bg-zinc-800/80" />
               <div>
-                <span className="block text-base font-semibold text-white tracking-tight">&lt; 100ms</span>
-                <span className="text-[11px] text-zinc-500 font-normal">API Latency</span>
+                <span className="text-zinc-100 font-semibold text-sm block">&lt; 100ms</span>
+                <span className="text-zinc-500 font-normal text-xs block">API Latency</span>
               </div>
-              <div className="h-8 w-px bg-zinc-800" />
+              <div className="h-8 w-px bg-zinc-800/80" />
               <div>
-                <span className="block text-base font-semibold text-white tracking-tight">100%</span>
-                <span className="text-[11px] text-zinc-500 font-normal">Data Isolation</span>
+                <span className="text-zinc-100 font-semibold text-sm block">100%</span>
+                <span className="text-zinc-500 font-normal text-xs block">Data Isolation</span>
               </div>
             </div>
 
           </div>
 
-          {/* Right Column: Refined Architectural Live CRM Preview Window */}
-          <div className="lg:col-span-6">
-            <div className="relative rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-1 shadow-2xl backdrop-blur-md">
+          {/* Right Column (5 Columns): Live Interactive CRM Preview Window */}
+          <div className="lg:col-span-5">
+            <div className="relative rounded-xl border border-zinc-800 bg-zinc-900/90 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden backdrop-blur-xl">
               
-              {/* Window Bar Header */}
-              <div className="flex items-center justify-between border-b border-zinc-800/80 px-4 py-2.5 bg-zinc-900/90 rounded-t-lg">
-                <div className="flex items-center gap-2">
-                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-                  <div className="h-2.5 w-2.5 rounded-full bg-zinc-700" />
-                  <span className="ml-2 text-[11px] font-mono text-zinc-500">https://leaddesk.agency/admin</span>
-                </div>
+              {/* Window Titlebar Header */}
+              <div className="h-10 px-4 bg-zinc-950/80 border-b border-zinc-800/80 flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-teal-400"></span>
-                  <span className="text-[10px] font-medium text-zinc-400 uppercase tracking-wider">Live Pipeline</span>
+                  <div className="w-2.5 h-2.5 rounded-full bg-zinc-800 border border-zinc-700/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-zinc-800 border border-zinc-700/50" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-zinc-800 border border-zinc-700/50" />
+                </div>
+
+                <div className="px-3 py-0.5 rounded-md bg-zinc-900 border border-zinc-800/80 text-[11px] text-zinc-500 font-mono flex items-center gap-1.5">
+                  <Globe className="w-3 h-3 text-zinc-500" />
+                  <span>https://leaddesk.agency/admin</span>
+                </div>
+
+                <div className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Live Pipeline</span>
                 </div>
               </div>
 
-              {/* Window Body: Clean CRM Analytics & Feed Mock */}
-              <div className="p-5 space-y-4 bg-[#0D0E11]/90">
+              {/* Card Body & Preview Analytics Grid */}
+              <div className="p-4 space-y-4 bg-zinc-950/60">
                 
-                {/* Metric Cards Mock */}
-                <div className="grid grid-cols-3 gap-3">
-                  <div className="rounded-lg border border-zinc-800 bg-zinc-900/80 p-3">
+                {/* 3 Grid Metric Cards */}
+                <div className="grid grid-cols-3 gap-2.5">
+                  <div className="p-3 rounded-lg bg-zinc-900/80 border border-zinc-800/80">
                     <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider block">Total Leads</span>
-                    <span className="text-xl font-semibold text-white tracking-tight mt-0.5 block">48</span>
-                    <span className="text-[10px] text-teal-400 font-medium">↑ +14% this week</span>
+                    <span className="text-lg font-semibold text-zinc-100 tracking-tight mt-0.5 block">48</span>
+                    <span className="text-[10px] text-teal-400 font-medium block mt-0.5">↑ +14% week</span>
                   </div>
-                  <div className="rounded-lg border border-zinc-800 bg-zinc-900/80 p-3">
+
+                  <div className="p-3 rounded-lg bg-zinc-900/80 border border-zinc-800/80">
                     <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider block">Active New</span>
-                    <span className="text-xl font-semibold text-white tracking-tight mt-0.5 block">12</span>
-                    <span className="text-[10px] text-zinc-400 font-medium">Requires Action</span>
+                    <span className="text-lg font-semibold text-zinc-100 tracking-tight mt-0.5 block">12</span>
+                    <span className="text-[10px] text-zinc-400 font-medium block mt-0.5">Action Needed</span>
                   </div>
-                  <div className="rounded-lg border border-zinc-800 bg-zinc-900/80 p-3">
-                    <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider block">Closed Pipeline</span>
-                    <span className="text-xl font-semibold text-white tracking-tight mt-0.5 block">$185k</span>
-                    <span className="text-[10px] text-emerald-400 font-medium">Converted Value</span>
+
+                  <div className="p-3 rounded-lg bg-zinc-900/80 border border-zinc-800/80">
+                    <span className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider block">Pipeline Value</span>
+                    <span className="text-lg font-semibold text-zinc-100 tracking-tight mt-0.5 block">$185k</span>
+                    <span className="text-[10px] text-emerald-400 font-medium block mt-0.5">Converted Value</span>
                   </div>
                 </div>
 
-                {/* Incoming Feed Rows Mock */}
+                {/* Live Recent Inquiries Feed List */}
                 <div className="space-y-2 pt-1">
                   <div className="flex items-center justify-between text-[11px] font-medium text-zinc-500 px-1 uppercase tracking-wider">
                     <span>Recent Incoming Inquiries</span>
-                    <span>Export CSV</span>
+                    <span className="text-zinc-400 font-mono">Export CSV</span>
                   </div>
 
                   {/* Feed Item 1 */}
-                  <div className="flex items-center justify-between rounded-lg border border-zinc-800/80 bg-zinc-900/60 p-3 transition-colors hover:bg-zinc-800/40">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-800 text-zinc-300 font-medium text-xs">
+                  <div className="flex items-center justify-between p-2.5 rounded-md border border-zinc-800/80 bg-zinc-900/60 hover:bg-zinc-800/50 transition-colors">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-md bg-zinc-800 text-zinc-300 font-medium text-xs">
                         SJ
                       </div>
                       <div>
                         <span className="text-xs font-semibold text-white block">Sarah Jenkins</span>
-                        <span className="text-[11px] text-zinc-400 block">sarah@company.com</span>
+                        <span className="text-[11px] text-zinc-400 block font-mono">sarah@company.com</span>
                       </div>
                     </div>
                     <div className="text-right">
@@ -161,14 +168,14 @@ export default function Hero() {
                   </div>
 
                   {/* Feed Item 2 */}
-                  <div className="flex items-center justify-between rounded-lg border border-zinc-800/80 bg-zinc-900/60 p-3 transition-colors hover:bg-zinc-800/40">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-800 text-zinc-300 font-medium text-xs">
+                  <div className="flex items-center justify-between p-2.5 rounded-md border border-zinc-800/80 bg-zinc-900/60 hover:bg-zinc-800/50 transition-colors">
+                    <div className="flex items-center gap-2.5">
+                      <div className="flex h-7 w-7 items-center justify-center rounded-md bg-zinc-800 text-zinc-300 font-medium text-xs">
                         MV
                       </div>
                       <div>
                         <span className="text-xs font-semibold text-white block">Marcus Vance</span>
-                        <span className="text-[11px] text-zinc-400 block">marcus@techcorp.io</span>
+                        <span className="text-[11px] text-zinc-400 block font-mono">marcus@techcorp.io</span>
                       </div>
                     </div>
                     <div className="text-right">
