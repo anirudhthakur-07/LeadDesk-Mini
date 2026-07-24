@@ -1,17 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { BUDGET_RANGES } from '@/constants';
+import { CURRENCIES, BUDGET_RANGES_BY_CURRENCY } from '@/constants';
 import { useToast } from '@/context/ToastContext';
-import { Send, CheckCircle2, Loader2, Sparkles, ShieldCheck } from 'lucide-react';
+import { Send, CheckCircle2, Loader2, Sparkles, ShieldCheck, Globe } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 
 export default function LeadForm() {
   const { addToast } = useToast();
+  const [selectedCurrency, setSelectedCurrency] = useState('USD');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
-    budgetRange: BUDGET_RANGES[0],
+    budgetRange: BUDGET_RANGES_BY_CURRENCY.USD[0],
     message: '',
   });
 
@@ -20,6 +21,14 @@ export default function LeadForm() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleCurrencyChange = (currencyCode) => {
+    setSelectedCurrency(currencyCode);
+    const newRanges = BUDGET_RANGES_BY_CURRENCY[currencyCode];
+    if (newRanges && newRanges.length > 0) {
+      setFormData((prev) => ({ ...prev, budgetRange: newRanges[0] }));
+    }
   };
 
   const handleBudgetSelect = (range) => {
@@ -49,7 +58,7 @@ export default function LeadForm() {
       setFormData({
         fullName: '',
         email: '',
-        budgetRange: BUDGET_RANGES[0],
+        budgetRange: BUDGET_RANGES_BY_CURRENCY[selectedCurrency][0],
         message: '',
       });
     } catch (err) {
@@ -59,35 +68,32 @@ export default function LeadForm() {
     }
   };
 
+  const activeRanges = BUDGET_RANGES_BY_CURRENCY[selectedCurrency] || BUDGET_RANGES_BY_CURRENCY.USD;
+
   return (
     <section id="capture-lead" className="py-16 border-b border-zinc-800/60 bg-[#09090B]">
       <div className="max-w-6xl mx-auto px-4">
-        
-        {/* 2-Column Split Grid Layout: Left (5 Cols) & Right (7 Cols) */}
         <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
           
-          {/* Left Column (5 Cols): Value Proposition & Security Callouts */}
+          {/* Left Column (5 Cols): Value Proposition */}
           <div className="lg:col-span-5">
-            <ScrollReveal direction="right">
-              {/* Announcement Pill Badge */}
+            <ScrollReveal direction="right" delay={0}>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-zinc-900 border border-zinc-800 text-zinc-400 mb-6 shadow-sm">
                 <Sparkles className="w-3 h-3 text-indigo-400" />
                 <span>Start Your Project</span>
               </div>
 
-              {/* Headline */}
               <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight mb-4">
                 <span className="bg-gradient-to-b from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
                   Ready To Scale Your Digital Infrastructure?
                 </span>
               </h2>
 
-              {/* Subtitle */}
               <p className="text-sm text-zinc-400 leading-relaxed font-normal mb-8">
                 Submit your inquiry details below. Our technical team evaluates project requirements and responds with a strategic roadmap within one business day.
               </p>
 
-              {/* Stacked Security Callout Cards */}
+              {/* Value Props List */}
               <div className="space-y-3.5">
                 <div className="p-3.5 rounded-lg bg-zinc-900/40 border border-zinc-800/60 flex items-start gap-3 transition-colors hover:bg-zinc-900/80">
                   <div className="p-2 rounded-md bg-zinc-800/60 text-emerald-400 border border-zinc-700/50 shrink-0">
@@ -156,26 +162,49 @@ export default function LeadForm() {
                     </div>
                   </div>
 
-                  {/* 3-Column Budget Selector Pill Buttons */}
+                  {/* Multi-Currency & Budget Range Selection */}
                   <div className="mb-5">
-                    <label className="block text-xs font-medium text-zinc-300 mb-2 font-mono tracking-wide">
-                      Estimated Project Budget <span className="text-indigo-400 ml-0.5">*</span>
-                    </label>
-                    <div className="grid grid-cols-3 gap-2.5">
-                      {BUDGET_RANGES.map((range) => {
+                    <div className="flex items-center justify-between mb-2">
+                      <label className="block text-xs font-medium text-zinc-300 font-mono tracking-wide">
+                        Estimated Project Budget <span className="text-indigo-400 ml-0.5">*</span>
+                      </label>
+                      
+                      {/* Currency Selector Tabs */}
+                      <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800">
+                        <Globe className="w-3 h-3 text-zinc-500 ml-1 mr-0.5" />
+                        {CURRENCIES.map((c) => (
+                          <button
+                            key={c.code}
+                            type="button"
+                            onClick={() => handleCurrencyChange(c.code)}
+                            className={`px-2 py-0.5 text-[10px] font-mono font-medium rounded transition-all ${
+                              selectedCurrency === c.code
+                                ? 'bg-zinc-800 text-white font-semibold border border-zinc-700/80 shadow-sm'
+                                : 'text-zinc-500 hover:text-zinc-300'
+                            }`}
+                          >
+                            {c.code}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Dynamic 5-Range Grid */}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
+                      {activeRanges.map((range) => {
                         const isSelected = formData.budgetRange === range;
                         return (
                           <button
                             key={range}
                             type="button"
                             onClick={() => handleBudgetSelect(range)}
-                            className={`px-3 py-2.5 rounded-lg text-xs font-medium border text-center transition-all duration-150 cursor-pointer select-none ${
+                            className={`px-2.5 py-2 rounded-lg text-xs font-medium border text-center transition-all duration-150 cursor-pointer select-none ${
                               isSelected
                                 ? 'bg-zinc-800 border-indigo-500/80 text-white shadow-inner ring-1 ring-indigo-500/30 font-semibold'
                                 : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200 hover:bg-zinc-900/80'
                             }`}
                           >
-                            <span className="block font-mono">{range}</span>
+                            <span className="block font-mono text-[11px] whitespace-nowrap">{range}</span>
                           </button>
                         );
                       })}
@@ -216,7 +245,6 @@ export default function LeadForm() {
                       </>
                     )}
                   </button>
-
                 </form>
 
               </div>
@@ -224,7 +252,6 @@ export default function LeadForm() {
           </div>
 
         </div>
-
       </div>
     </section>
   );

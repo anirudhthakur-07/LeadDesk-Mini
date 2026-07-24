@@ -18,10 +18,8 @@ const LeadSchema = new mongoose.Schema(
     budgetRange: {
       type: String,
       required: [true, 'Budget range is required'],
-      enum: {
-        values: ['$1,000 - $5,000', '$5,000 - $10,000', '$10,000+'],
-        message: 'Invalid budget range selected',
-      },
+      trim: true,
+      maxlength: [50, 'Budget range cannot exceed 50 characters'],
     },
     message: {
       type: String,

@@ -19,7 +19,7 @@ export function validateCreateLeadPayload(body) {
     return { isValid: false, error: 'Please provide a valid email address', status: 422 };
   }
 
-  if (!budgetRange || !ALLOWED_BUDGETS.includes(budgetRange)) {
+  if (!budgetRange || budgetRange.length < 2 || budgetRange.length > 50) {
     return { isValid: false, error: 'Invalid budget range selected', status: 422 };
   }
 
