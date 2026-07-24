@@ -34,24 +34,24 @@ export default function AdminHeader({ adminEmail }) {
             </span>
           </Link>
           <span className="text-zinc-700 font-mono">/</span>
-          <span className="text-xs font-medium text-zinc-400">CRM Pipeline Control</span>
+          <span className="text-xs font-medium text-zinc-400 font-mono">CRM Pipeline Control</span>
         </div>
 
-        {/* User Info & Logout CTA */}
-        <div className="flex items-center gap-4">
+        {/* User Info Tag & Logout CTA */}
+        <div className="flex items-center gap-3">
           {adminEmail && (
-            <div className="hidden sm:flex items-center gap-2 text-xs font-medium text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-lg">
-              <User className="w-3.5 h-3.5 text-zinc-400" />
+            <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1.5 rounded-md">
+              <User className="w-3.5 h-3.5 text-zinc-500" />
               <span>{adminEmail}</span>
             </div>
           )}
 
           <button
             onClick={handleLogout}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 transition-all"
+            className="text-xs text-zinc-400 hover:text-red-400 transition-colors px-2 py-1.5 font-medium flex items-center gap-1.5 cursor-pointer"
             title="Sign out of admin session"
           >
-            <LogOut className="w-3.5 h-3.5 text-zinc-400" />
+            <LogOut className="w-3.5 h-3.5" />
             <span>Logout</span>
           </button>
         </div>

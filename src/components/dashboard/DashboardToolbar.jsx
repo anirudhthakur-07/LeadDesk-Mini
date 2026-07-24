@@ -24,19 +24,19 @@ export default function DashboardToolbar({
   };
 
   return (
-    <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-4 mb-6 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 shadow-sm backdrop-blur-md">
+    <div className="flex flex-wrap items-center justify-between gap-3 p-2 bg-zinc-900/60 border border-zinc-800/80 rounded-xl mb-4 backdrop-blur-md">
       
-      {/* Left Group: Action Buttons & Last Updated Indicator */}
-      <div className="flex flex-wrap items-center gap-2.5">
+      {/* Left Actions Group: Sync, Clear, Export, Time Tracker */}
+      <div className="flex flex-wrap items-center gap-2">
         
-        {/* Sync / Refresh Button: Solid White Accent */}
+        {/* Sync DB Control */}
         <button
           onClick={onRefresh}
           disabled={refreshing}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-lg bg-white hover:bg-zinc-200 text-zinc-950 text-xs font-medium shadow-sm transition-all disabled:opacity-50 min-h-[36px]"
+          className="bg-zinc-800 hover:bg-zinc-700 text-zinc-100 border border-zinc-700/80 text-xs font-medium px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 active:scale-95 shadow-sm disabled:opacity-50"
           title="Refresh database records"
         >
-          <RefreshCw className={`w-3.5 h-3.5 text-zinc-950 ${refreshing ? 'animate-spin' : ''}`} />
+          <RefreshCw className={`w-3.5 h-3.5 text-zinc-300 ${refreshing ? 'animate-spin duration-700' : ''}`} />
           <span>Sync DB</span>
         </button>
 
@@ -44,7 +44,7 @@ export default function DashboardToolbar({
         {isSearchActive && (
           <button
             onClick={onClearSearch}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-medium text-zinc-300 hover:text-white transition-all min-h-[36px]"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-medium text-zinc-300 hover:text-white transition-all"
             title="Clear active search filter"
           >
             <X className="w-3.5 h-3.5 text-rose-400" />
@@ -56,7 +56,7 @@ export default function DashboardToolbar({
         {isFilterActive && (
           <button
             onClick={onResetFilters}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-medium text-zinc-300 hover:text-white transition-all min-h-[36px]"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-medium text-zinc-300 hover:text-white transition-all"
             title="Reset status filter to All"
           >
             <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
@@ -68,7 +68,7 @@ export default function DashboardToolbar({
         <button
           onClick={handleExport}
           disabled={!leads || leads.length === 0}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-medium transition-all disabled:opacity-40 min-h-[36px]"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-medium transition-all disabled:opacity-40"
           title="Export current leads view to CSV"
         >
           <Download className="w-3.5 h-3.5 text-zinc-400" />
@@ -79,25 +79,25 @@ export default function DashboardToolbar({
         <LastUpdated lastUpdatedTime={lastUpdatedTime} />
       </div>
 
-      {/* Right Group: Active State Indicators */}
-      <div className="flex flex-wrap items-center gap-2 text-xs">
+      {/* Right Status Indicators */}
+      <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-zinc-400">
         {isSearchActive && (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-teal-500/10 border border-teal-500/20 text-teal-300 font-medium">
+          <span className="px-2.5 py-1 rounded-md bg-zinc-950/60 border border-zinc-800 text-teal-300">
             Search: &quot;{search}&quot;
           </span>
         )}
 
         {isFilterActive && (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-300 font-medium">
+          <span className="px-2.5 py-1 rounded-md bg-zinc-950/60 border border-zinc-800 text-amber-300">
             Status: {activeTab}
           </span>
         )}
 
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-900 border border-zinc-800 text-zinc-400 font-medium">
+        <span className="px-2.5 py-1 rounded-md bg-zinc-950/60 border border-zinc-800">
           Sort: {currentSort}
         </span>
 
-        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-800 border border-zinc-700/60 text-white font-semibold">
+        <span className="px-2.5 py-1 rounded-md bg-zinc-800 border border-zinc-700/60 text-white font-semibold">
           {totalFilteredCount} Result{totalFilteredCount === 1 ? '' : 's'}
         </span>
       </div>

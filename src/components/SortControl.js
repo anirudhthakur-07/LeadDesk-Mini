@@ -42,20 +42,22 @@ export default function SortControl({ currentSort, onSortChange }) {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         aria-label="Sort leads"
-        className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-lg border border-zinc-800 bg-zinc-900 text-xs font-medium text-zinc-300 hover:text-white hover:border-zinc-700 transition-all shadow-sm focus:outline-none focus:ring-1 focus:ring-zinc-400/20"
+        className="bg-zinc-950 border border-zinc-800 hover:border-zinc-700 text-zinc-300 text-xs font-medium px-3 py-2 rounded-lg transition-all flex items-center justify-between gap-2 cursor-pointer min-w-[160px]"
       >
-        <ArrowUpDown className="w-3.5 h-3.5 text-zinc-400" />
-        <span>Sort: {currentOption.shortLabel}</span>
-        <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+        <div className="flex items-center gap-1.5">
+          <ArrowUpDown className="w-3.5 h-3.5 text-zinc-500" />
+          <span>Sort: {currentOption.shortLabel}</span>
+        </div>
+        <ChevronDown className={`w-3.5 h-3.5 text-zinc-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {/* Glassmorphic Dropdown Panel */}
+      {/* Dropdown Panel */}
       {isOpen && (
         <div
           role="listbox"
-          className="absolute right-0 mt-2 w-56 rounded-xl border border-zinc-800 bg-[#0D0E11] p-1.5 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150"
+          className="absolute right-0 mt-2 bg-zinc-900 border border-zinc-800 rounded-xl shadow-2xl p-1.5 w-56 z-50 animate-in fade-in-0 zoom-in-95 duration-150"
         >
-          <div className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-zinc-500 border-b border-zinc-800/80 mb-1">
+          <div className="px-2 py-1 text-[10px] font-mono font-semibold text-zinc-500 uppercase tracking-wider border-b border-zinc-800/80 mb-1">
             Sort Pipeline By
           </div>
 
@@ -69,10 +71,10 @@ export default function SortControl({ currentSort, onSortChange }) {
                   role="option"
                   aria-selected={isSelected}
                   onClick={() => handleSelect(option.id)}
-                  className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all ${
+                  className={`w-full px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center justify-between cursor-pointer transition-colors ${
                     isSelected
-                      ? 'bg-zinc-800 text-white font-semibold'
-                      : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-white'
+                      ? 'bg-zinc-800/80 text-white font-semibold'
+                      : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
                   }`}
                 >
                   <div className="flex flex-col text-left">

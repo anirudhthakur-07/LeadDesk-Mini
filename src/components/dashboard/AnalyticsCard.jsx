@@ -10,6 +10,7 @@ export default function AnalyticsCard({
   badgeVariant = 'neutral',
   icon: Icon,
   loading = false,
+  borderTrimColor = 'border-l-zinc-500',
 }) {
   const getBadgeStyle = (variant) => {
     switch (variant) {
@@ -26,7 +27,7 @@ export default function AnalyticsCard({
 
   if (loading) {
     return (
-      <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-5 shadow-sm space-y-3">
+      <div className={`rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-4 shadow-sm space-y-3 ${borderTrimColor}`}>
         <div className="flex items-center justify-between">
           <Skeleton className="h-4 w-24 bg-zinc-800" />
           <Skeleton className="h-7 w-7 rounded-lg bg-zinc-800" />
@@ -41,29 +42,29 @@ export default function AnalyticsCard({
     <div
       role="region"
       aria-label={`${title} Analytics Card`}
-      className="group relative rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-5 shadow-sm backdrop-blur-md transition-all duration-200 hover:border-zinc-700 hover:bg-zinc-800/40"
+      className={`group relative rounded-xl border border-zinc-800/80 bg-zinc-900/50 p-4 shadow-sm backdrop-blur-md transition-all duration-150 hover:border-zinc-700/80 hover:bg-zinc-900/80 ${borderTrimColor}`}
     >
-      {/* Header: Title & Icon */}
-      <div className="flex items-center justify-between gap-2 mb-3">
-        <span className="text-xs font-medium text-zinc-400 uppercase tracking-wider">
+      {/* Top Bar: Label & Icon */}
+      <div className="flex items-center justify-between gap-2">
+        <span className="text-xs font-mono font-medium text-zinc-400 uppercase tracking-wider">
           {title}
         </span>
         {Icon && (
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-zinc-800 bg-zinc-900 text-zinc-300">
-            <Icon className="h-4 w-4" />
+          <div className="w-7 h-7 rounded-lg bg-zinc-800/60 text-zinc-300 flex items-center justify-center border border-zinc-700/50">
+            <Icon className="h-3.5 w-3.5" />
           </div>
         )}
       </div>
 
-      {/* Metric Display */}
-      <div className="flex items-baseline justify-between gap-2">
-        <h3 className="text-3xl font-semibold tracking-tight text-white">
+      {/* Metric Value Display */}
+      <div className="flex items-baseline justify-between gap-2 mt-3 mb-1">
+        <h3 className="text-2xl lg:text-3xl font-bold tracking-tight text-white">
           {value}
         </h3>
 
         {badgeText && (
           <span
-            className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-medium ${getBadgeStyle(
+            className={`inline-flex items-center rounded-md border px-2 py-0.5 text-[10px] font-mono font-medium ${getBadgeStyle(
               badgeVariant
             )}`}
           >
@@ -72,9 +73,9 @@ export default function AnalyticsCard({
         )}
       </div>
 
-      {/* Subtitle / Context */}
+      {/* Bottom Sub-label / Trend */}
       {subtitle && (
-        <p className="mt-2 text-xs font-normal text-zinc-400 truncate">
+        <p className="text-[11px] font-mono text-zinc-500 truncate">
           {subtitle}
         </p>
       )}
