@@ -6,7 +6,8 @@ import AdminHeader from '@/components/AdminHeader';
 import MetricsBar from '@/components/MetricsBar';
 import SearchFilterBar from '@/components/SearchFilterBar';
 import LeadsTable from '@/components/LeadsTable';
-import { RefreshCw, Search } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
+import { sortLeads } from '@/utils/sorter';
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function AdminDashboard() {
   const [metrics, setMetrics] = useState({ total: 0, newLeads: 0, contacted: 0, closed: 0 });
   const [search, setSearch] = useState('');
   const [activeTab, setActiveTab] = useState('All');
+  const [currentSort, setCurrentSort] = useState('NEWEST');
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -36,7 +38,7 @@ export default function AdminDashboard() {
     checkAuth();
   }, [router]);
 
-  // Fetch all active leads and summary metrics from backend
+  // Fetch active leads and summary metrics from backend
   const fetchLeads = useCallback(async () => {
     try {
       setRefreshing(true);
@@ -65,11 +67,12 @@ export default function AdminDashboard() {
     }
   }, [admin, fetchLeads]);
 
-  // Instant Real-Time Multi-Field Search & Tab Filtering Logic (useMemo for 0ms latency)
-  const filteredLeads = useMemo(() => {
+  // Combined Pipeline: Filter by Tab ➔ Filter by Search ➔ Sort by Multi-Criteria Engine
+  const processedLeads = useMemo(() => {
     const query = search.trim().toLowerCase();
 
-    return leads.filter((lead) => {
+    // 1. Filter Stage
+    const filtered = leads.filter((lead) => {
       // Status Tab Filter
       if (activeTab !== 'All' && lead.status !== activeTab) {
         return false;
@@ -87,7 +90,10 @@ export default function AdminDashboard() {
 
       return nameMatch || emailMatch || statusMatch || budgetMatch || messageMatch;
     });
-  }, [leads, search, activeTab]);
+
+    // 2. Sort Stage using Enterprise Sorter Utility
+    return sortLeads(filtered, currentSort);
+  }, [leads, search, activeTab, currentSort]);
 
   // Update lead status live
   const handleUpdateStatus = async (id, newStatus) => {
@@ -132,11 +138,11 @@ export default function AdminDashboard() {
             <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
               <span>Leads Management</span>
               <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                Instant Search Active
+                Live Search & Sort Active
               </span>
             </h1>
             <p className="text-slate-400 text-sm mt-1">
-              Real-time pipeline management with 0ms instant multi-field search and CSV export.
+              Enterprise pipeline management with 0ms instant search, multi-criteria sorting, and CSV export.
             </p>
           </div>
 
@@ -153,19 +159,21 @@ export default function AdminDashboard() {
         {/* Metrics Summary Bar */}
         <MetricsBar metrics={metrics} />
 
-        {/* Instant Search & Filter Bar */}
+        {/* Instant Search, Multi-Criteria Sort & Filter Bar */}
         <SearchFilterBar
           search={search}
           setSearch={setSearch}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          leads={filteredLeads}
-          totalFilteredCount={filteredLeads.length}
+          currentSort={currentSort}
+          setCurrentSort={setCurrentSort}
+          leads={processedLeads}
+          totalFilteredCount={processedLeads.length}
         />
 
-        {/* Leads Table with Memoized Filtered Leads */}
+        {/* Leads Table with Processed (Filtered & Sorted) Leads */}
         <LeadsTable
-          leads={filteredLeads}
+          leads={processedLeads}
           onUpdateLeadStatus={handleUpdateStatus}
           onDeleteLead={handleDeleteLead}
           loading={loading}
