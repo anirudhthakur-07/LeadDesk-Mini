@@ -1,11 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Mail, User, DollarSign, MessageSquare, Trash2, Search, RefreshCw, Layers, Inbox } from 'lucide-react';
+import { Calendar, Mail, DollarSign, MessageSquare, Trash2, Search, RefreshCw, XCircle } from 'lucide-react';
 import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal';
 import StatusSelector from '@/components/ui/StatusSelector';
 import TableSkeleton from '@/components/skeleton/TableSkeleton';
 import EmptyState from '@/components/empty/EmptyState';
+import LeadCard from '@/components/dashboard/LeadCard';
 
 export default function LeadsTable({
   leads,
@@ -69,7 +70,7 @@ export default function LeadsTable({
   if (!leads || leads.length === 0) {
     return (
       <EmptyState
-        icon={Inbox}
+        icon={XCircle}
         title="No Lead Inquiries Available"
         description="Your agency lead pipeline is currently empty. New project submissions from your public landing page will automatically populate here in real-time."
         actionLabel="Go to Landing Page Form"
@@ -80,7 +81,21 @@ export default function LeadsTable({
 
   return (
     <>
-      <div className="glass-panel rounded-2xl border border-white/10 overflow-hidden shadow-2xl transition-all">
+      {/* MOBILE VIEW (< md / < 768px): Touch-Friendly Cards Layout */}
+      <div className="md:hidden space-y-4">
+        {leads.map((lead) => (
+          <LeadCard
+            key={lead._id}
+            lead={lead}
+            onUpdateStatus={handleStatusChange}
+            onOpenDeleteModal={handleOpenDeleteModal}
+            updatingId={updatingId}
+          />
+        ))}
+      </div>
+
+      {/* DESKTOP / TABLET VIEW (>= md / >= 768px): Full 7-Column Data Table */}
+      <div className="hidden md:block glass-panel rounded-2xl border border-white/10 overflow-hidden shadow-2xl transition-all">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead className="bg-slate-950/80 border-b border-white/10 uppercase tracking-wider text-xs font-semibold text-slate-400">
@@ -155,7 +170,7 @@ export default function LeadsTable({
                   <td className="py-4 px-5 text-right">
                     <button
                       onClick={() => handleOpenDeleteModal(lead)}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 hover:bg-rose-500/10 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center ml-auto"
                       title="Delete lead"
                     >
                       <Trash2 className="w-4 h-4" />
