@@ -9,11 +9,13 @@ import SearchFilterBar from '@/components/SearchFilterBar';
 import LeadsTable from '@/components/LeadsTable';
 import DashboardToolbar from '@/components/dashboard/DashboardToolbar';
 import { sortLeads } from '@/utils/sorter';
+import { Shield, Loader2 } from 'lucide-react';
 
 export default function AdminDashboard() {
   const router = useRouter();
   const { addToast } = useToast();
   const [admin, setAdmin] = useState(null);
+  const [authChecking, setAuthChecking] = useState(true);
   const [leads, setLeads] = useState([]);
   const [metrics, setMetrics] = useState({ total: 0, newLeads: 0, contacted: 0, closed: 0 });
   const [search, setSearch] = useState('');
@@ -23,31 +25,58 @@ export default function AdminDashboard() {
   const [refreshing, setRefreshing] = useState(false);
   const [lastUpdatedTime, setLastUpdatedTime] = useState(null);
 
-  // Fetch session & current admin info
+  // Strict Client-Side Session Verification (Eliminates Flash of Protected Content FOPC)
   useEffect(() => {
+    let isMounted = true;
+
     async function checkAuth() {
       try {
-        const res = await fetch('/api/auth/me');
+        const res = await fetch('/api/auth/me', {
+          headers: { 'Cache-Control': 'no-cache, no-store' },
+        });
+
         if (!res.ok) {
-          router.push('/login');
+          if (isMounted) {
+            router.replace('/login');
+          }
           return;
         }
+
         const data = await res.json();
-        setAdmin(data.admin);
+        if (data.success && data.admin) {
+          if (isMounted) {
+            setAdmin(data.admin);
+            setAuthChecking(false);
+          }
+        } else {
+          if (isMounted) {
+            router.replace('/login');
+          }
+        }
       } catch (err) {
-        router.push('/login');
+        if (isMounted) {
+          router.replace('/login');
+        }
       }
     }
+
     checkAuth();
+
+    return () => {
+      isMounted = false;
+    };
   }, [router]);
 
-  // Fetch active leads and summary metrics from backend
+  // Fetch active leads and summary metrics from backend ONLY after auth is verified
   const fetchLeads = useCallback(async (isManualSync = false) => {
     try {
       setRefreshing(true);
-      const res = await fetch('/api/leads');
+      const res = await fetch('/api/leads', {
+        headers: { 'Cache-Control': 'no-cache, no-store' },
+      });
+
       if (res.status === 401) {
-        router.push('/login');
+        router.replace('/login');
         return;
       }
 
@@ -69,11 +98,12 @@ export default function AdminDashboard() {
     }
   }, [router, addToast]);
 
+  // Execute fetchLeads strictly AFTER admin state is non-null and verified
   useEffect(() => {
-    if (admin) {
+    if (admin && !authChecking) {
       fetchLeads();
     }
-  }, [admin, fetchLeads]);
+  }, [admin, authChecking, fetchLeads]);
 
   // Combined Pipeline: Filter by Tab ➔ Filter by Search ➔ Sort by Multi-Criteria Engine
   const processedLeads = useMemo(() => {
@@ -141,6 +171,27 @@ export default function AdminDashboard() {
     }
   };
 
+  // ZERO-FOPC GUARD: Render secure full-screen loading screen while verifying session
+  if (authChecking || !admin) {
+    return (
+      <div className="min-h-screen bg-[#09090B] bg-ambient-top flex flex-col items-center justify-center p-4">
+        <div className="flex flex-col items-center gap-4 text-center">
+          <div className="h-12 w-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-indigo-400 shadow-xl">
+            <Shield className="w-6 h-6" />
+          </div>
+          <div className="flex items-center gap-2 text-sm font-medium text-zinc-300 font-mono">
+            <Loader2 className="w-4 h-4 animate-spin text-indigo-400" />
+            <span>Verifying Admin Authentication...</span>
+          </div>
+          <p className="text-xs text-zinc-500 max-w-xs font-normal">
+            Encrypted session token verification in progress.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Render Admin Dashboard ONLY after authentication is 100% verified
   return (
     <div className="min-h-screen bg-[#09090B] bg-ambient-top text-zinc-100 flex flex-col">
       <AdminHeader adminEmail={admin?.email} />
