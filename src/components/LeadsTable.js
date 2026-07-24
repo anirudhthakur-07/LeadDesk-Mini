@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Calendar, Mail, User, DollarSign, MessageSquare, Trash2, Loader2, Search, RefreshCw, XCircle } from 'lucide-react';
+import { Calendar, Mail, User, DollarSign, MessageSquare, Trash2, Search, RefreshCw, XCircle } from 'lucide-react';
 import DeleteConfirmationModal from '@/components/ui/DeleteConfirmationModal';
 import StatusSelector from '@/components/ui/StatusSelector';
+import TableSkeleton from '@/components/skeleton/TableSkeleton';
 
 export default function LeadsTable({
   leads,
@@ -45,19 +46,9 @@ export default function LeadsTable({
     }
   };
 
-  // Loading Skeleton / Spinner State
+  // Enterprise Table Skeleton Loading State
   if (loading) {
-    return (
-      <div className="glass-panel p-16 rounded-2xl border border-white/10 flex flex-col items-center justify-center gap-4 text-center">
-        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/20">
-          <Loader2 className="w-6 h-6 text-blue-400 animate-spin" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-white">Fetching Live Pipeline Data</p>
-          <p className="text-xs text-slate-400 mt-1">Connecting to isolated MongoDB lead repository...</p>
-        </div>
-      </div>
-    );
+    return <TableSkeleton rows={5} />;
   }
 
   // Elegant No Results Empty State
