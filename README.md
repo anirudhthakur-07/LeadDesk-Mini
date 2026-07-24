@@ -14,8 +14,8 @@ LeadDesk Mini is a full-stack lead management product built for the **Digital He
 
 - **Role**: `04 / 16 — Full Stack Development`
 - **Candidate Name**: Anirudh Thakur
-- **Live Landing Page URL**: `https://leaddesk-mini.vercel.app` (or `http://localhost:3000`)
-- **Admin Dashboard URL**: `http://localhost:3000/admin`
+- **Live Production URL**: [https://lead-desk-mini-t44a.vercel.app](https://lead-desk-mini-t44a.vercel.app)
+- **Admin Dashboard URL**: [https://lead-desk-mini-t44a.vercel.app/admin](https://lead-desk-mini-t44a.vercel.app/admin)
 - **GitHub Repository**: [https://github.com/anirudhthakur-07/LeadDesk-Mini](https://github.com/anirudhthakur-07/LeadDesk-Mini)
 - **Test Credentials**:
   - **Admin Email**: `admin@leaddesk.com`
@@ -23,16 +23,31 @@ LeadDesk Mini is a full-stack lead management product built for the **Digital He
 
 ---
 
+## 🎯 Executive Pitch & Solution Overview
+
+> *"LeadDesk Mini solves the problem of lost agency leads and fragmented client communication. It provides prospective clients with a multi-currency project inquiry form and a live response lookup tool, while giving agency managers a secure, real-time CRM dashboard to track pipeline metrics, update statuses, send reply notes, and export CSV data — all protected by enterprise JWT security."*
+
+### ⚡ What Problem It Solves
+
+- **❌ Traditional Broken Way**: Contact forms send static emails that land in spam, leave clients with zero visibility on their inquiry status, and leave agency managers tracking leads across messy spreadsheets.
+- **✅ LeadDesk Mini Solution**: 
+  1. **Instant Lead Capture**: Real-time multi-currency validation and direct persistence to MongoDB Atlas.
+  2. **Real-Time CRM Dashboard**: Live pipeline control (`New` ➔ `Contacted` ➔ `Closed`) with instant 0ms search, filter pills, and sorting.
+  3. **Two-Way Communication Loop**: Admins can write reply notes directly in the table, and clients can check their response status live on the public site via the navbar.
+  4. **Data Protection**: Soft-delete pipeline (`isDeleted: true`) and 1-click CSV export with formula injection protection.
+
+---
+
 ## 1. Task A & Task B Overview
 
 ### Task A — Build LeadDesk Mini
-- **Public Lead Form**: Captures `fullName`, `email`, `budgetRange`, and `message` with real-time client-side and server-side validation.
+- **Public Lead Form**: Captures `fullName`, `email`, `budgetRange`, and `message` with multi-currency selectors (USD $, EUR €, GBP £, INR ₹), 5-tier budget buttons, and dual-layer validation.
 - **Real Database Storage**: Persists lead submissions in a cloud MongoDB Atlas database.
-- **Admin View (`/admin`)**: Lists all leads with instant search, multi-criteria sorting, and status toggling (`New` / `Contacted` / `Closed`).
+- **Admin View (`/admin`)**: Lists all leads with instant search, multi-criteria sorting, status toggling (`New` / `Contacted` / `Closed`), and inline reply notes.
 
 ### Task B — Secure It and Ship It
 - **Real Admin Authentication**: Session authentication powered by signed JWT cookies and 12-round bcrypt password hashing (no hardcoded string validation).
-- **Production Deployment**: Configured for zero-state fresh browser execution on free-tier hosting (Vercel).
+- **Production Deployment**: Deployed and configured for zero-state fresh browser execution on Vercel.
 - **Data Retention**: Soft-delete pipeline (`isDeleted: true`) preserving historical analytics and audit trails.
 
 ---
@@ -46,21 +61,22 @@ The application relies on two primary Mongoose schemas in MongoDB Atlas:
 interface ILead {
   fullName: string;      // Trimmed, 2–100 chars, required
   email: string;         // Normalized lowercase, RFC 5322 regex validated, required
-  budgetRange: string;   // Enum: ["<$5k", "$5k - $10k", "$10k+"], required
-  message: string;       // Sanitized project details, 10–2000 chars, required
+  budgetRange: string;   // Multi-currency range string, required
+  message: string;       // Sanitized project details, 10–1000 chars, required
   status: string;        // Enum: ["New", "Contacted", "Closed"], default: "New"
+  adminReply: string;    // Admin reply note, max 500 chars, default: ""
+  repliedAt: Date;       // Timestamp when admin replied
   isDeleted: boolean;    // Soft-delete flag for data protection, default: false
   createdAt: Date;       // ISO timestamp
   updatedAt: Date;       // ISO timestamp
 }
 ```
 
-### User Admin Schema (`models/User.js`)
+### Admin Schema (`models/Admin.js`)
 ```typescript
-interface IUser {
+interface IAdmin {
   email: string;         // Unique, normalized lowercase admin email
-  passwordHash: string;  // Salted bcrypt hash (12 rounds)
-  role: string;          // Default: "admin"
+  password: string;      // Salted bcrypt hash (12 rounds)
   createdAt: Date;
 }
 ```
@@ -83,15 +99,16 @@ LeadDesk Mini implements enterprise DevSecOps standards for route guarding and s
 ### Public Landing Page
 - Modern dark slate aesthetic (`#09090B`) inspired by **Linear**, **Vercel**, and **Stripe**.
 - Custom geometric SVG brand emblem (`Logo.jsx`) with abstract "LD" gradient shield.
+- Multi-currency selector tabs (**USD $**, **EUR €**, **GBP £**, **INR ₹**) with 5-tier budget range buttons.
+- Public **Check Response Modal** allowing clients to lookup admin replies using their email.
 - Bidirectional scroll reveal animations (`ScrollReveal.jsx`) on both scroll-down and scroll-up.
-- High-converting split-glass form card with budget selector pills and instant validation feedback.
 
 ### Admin CRM Dashboard
 - **Analytics Metric Grid**: Computes total leads, new inquiries, contacted leads, closed conversions, and conversion rate %.
+- **Inline Admin Reply Box**: Write short reply notes to client inquiries directly inside the table.
 - **0ms Instant Search**: Search across name, email, budget, status, or message with `⌘K` / `Ctrl+K` keyboard shortcuts.
 - **Multi-Criteria Dropdown Sorter**: Weighted status priority sorting (`New` ➔ `Contacted` ➔ `Closed`) and budget ranking.
 - **1-Click CSV CRM Export**: Exports active pipeline views directly to formatted `.csv` files.
-- **Glass Delete Confirmation Modal**: Custom glass modal replacing standard browser `confirm()` popups.
 
 ---
 
@@ -107,109 +124,29 @@ LeadDesk Mini implements enterprise DevSecOps standards for route guarding and s
 
 ---
 
-## 6. System Architecture
-
-![System Architecture Diagram](public/architecture_diagram.jpg)
-
-### Layered Architecture Flow
-```text
-Visitor / Admin Client (React UI)
-  │
-  ▼
-Next.js Middleware Guard (JWT Cookie Verification & Security Headers)
-  │
-  ▼
-App Router Gateways (src/app/api/*)
-  │
-  ▼
-Validation Layer (src/validators/* & src/utils/sanitize.js)
-  │
-  ▼
-Data Access Repositories (Mongoose ORM Models)
-  │
-  ▼
-Database Layer (src/lib/db.js DNS SRV Resolver & Cached Connection)
-  │
-  ▼
-MongoDB Atlas (Isolated Cloud Database)
-```
-
----
-
-## 7. Project Structure
-
-```text
-src/
-├── app/
-│   ├── admin/                # Protected Admin Dashboard page
-│   ├── api/
-│   │   ├── auth/             # Login, logout, and session check endpoints
-│   │   └── leads/            # Lead CRUD endpoints
-│   ├── login/                # Admin Login page
-│   ├── globals.css           # Base zinc styles & user-select rules
-│   ├── layout.js             # Root application layout
-│   └── page.js               # Public Landing page
-├── components/
-│   ├── dashboard/            # Metric cards, toolbar, & mobile lead cards
-│   ├── empty/                # Notion/Stripe grade empty states
-│   ├── skeleton/             # Layout-matched skeleton loaders
-│   ├── ui/                   # Logo, ScrollReveal, Modals, & Toasts
-│   ├── Features.js           # Technical bento grid section
-│   ├── Footer.js             # Footer with Digital Heroes verification credit
-│   ├── Hero.js               # Asymmetrical 12-col hero & preview window
-│   ├── LeadForm.js           # Split-glass interactive lead form
-│   └── Navbar.js             # Navigation bar with brand logo
-├── constants/                # Shared status colors & budget ranges
-├── context/                  # Toast notification context provider
-├── lib/                      # Database & auth helper utilities
-├── models/                   # Mongoose database models
-├── utils/                    # CSV exporter, sorter, & sanitizers
-└── validators/               # Input validation rules
-```
-
----
-
-## 8. Environment Variables Setup
-
-Create a `.env.local` file in the root directory:
-
-```env
-# Database Connection URI
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster.mongodb.net/leaddesk-mini?retryWrites=true&w=majority
-
-# JWT Secret Key
-JWT_SECRET=your_jwt_secret_key_here
-
-# Password Hashing Salt Cost
-BCRYPT_ROUNDS=12
-
-# Environment Mode
-NODE_ENV=development
-```
-
----
-
-## 9. API Reference
+## 6. API Reference
 
 | Method | Endpoint | Description | Auth Required |
 | :--- | :--- | :--- | :---: |
 | `POST` | `/api/leads` | Submit a new lead inquiry | No |
 | `GET` | `/api/leads` | Retrieve leads list & metrics | **Yes** |
 | `PATCH` | `/api/leads/[id]` | Update lead status (`New`, `Contacted`, `Closed`) | **Yes** |
+| `PUT` | `/api/leads/[id]` | Add admin reply note to a lead | **Yes** |
 | `DELETE` | `/api/leads/[id]` | Soft-delete a lead record | **Yes** |
+| `POST` | `/api/leads/responses` | Public email lookup for admin replies | No (Rate-Limited) |
 | `POST` | `/api/auth/login` | Authenticate administrator | No |
 | `GET` | `/api/auth/me` | Verify active admin session | **Yes** |
 | `POST` | `/api/auth/logout` | Terminate session & clear cookie | No |
 
 ---
 
-## 10. AI Usage Declaration
+## 7. AI Usage Declaration
 
 *AI Statement (Digital Heroes Requirement)*: AI models (Claude & Gemini) were used during development to pressure-test schema validation edge cases, generate initial UI component scaffolding, and audit cross-browser layout stability. All UI design tokens, status dropdown selectors, tabular numbers, scroll reveal hooks, and JWT authentication flows were customized, refined, and audited manually.
 
 ---
 
-## 11. Author & License
+## 8. Author & License
 
 - **Author**: Anirudh Thakur
 - **GitHub**: [github.com/anirudhthakur-07](https://github.com/anirudhthakur-07)
