@@ -59,56 +59,73 @@ export default function LeadForm() {
   };
 
   return (
-    <section id="capture-lead" className="py-20 border-b border-zinc-800/60 bg-[#09090B]">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="capture-lead" className="py-16 border-b border-zinc-800/60 bg-[#09090B]">
+      <div className="max-w-6xl mx-auto px-4">
         
-        <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+        {/* 2-Column Split Grid Layout: Left (5 Cols) & Right (7 Cols) */}
+        <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
           
-          {/* Left Column: Form Intro & Agency Promise */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900 px-3.5 py-1 text-xs font-medium text-zinc-400">
-              <Sparkles className="h-3.5 w-3.5 text-zinc-300" />
+          {/* Left Column (5 Cols): Value Proposition & Security Callouts */}
+          <div className="lg:col-span-5">
+            
+            {/* Announcement Pill Badge */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-medium bg-zinc-900 border border-zinc-800 text-zinc-400 mb-6 shadow-sm">
+              <Sparkles className="w-3 h-3 text-indigo-400" />
               <span>Start Your Project</span>
             </div>
 
-            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl leading-tight">
-              Ready To Scale Your Digital Infrastructure?
+            {/* Headline */}
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight mb-4">
+              <span className="bg-gradient-to-b from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">
+                Ready To Scale Your Digital Infrastructure?
+              </span>
             </h2>
 
-            <p className="text-sm text-zinc-400 leading-relaxed font-normal">
+            {/* Subtitle */}
+            <p className="text-sm text-zinc-400 leading-relaxed font-normal mb-8">
               Submit your inquiry details below. Our technical team evaluates project requirements and responds with a strategic roadmap within one business day.
             </p>
 
-            <div className="space-y-3 pt-2 text-xs text-zinc-400">
-              <div className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/60 p-3.5">
-                <ShieldCheck className="h-5 w-5 text-zinc-300 flex-shrink-0" />
+            {/* Stacked Security Callout Cards */}
+            <div className="space-y-3.5">
+              <div className="p-3.5 rounded-lg bg-zinc-900/40 border border-zinc-800/60 flex items-start gap-3 transition-colors hover:bg-zinc-900/80">
+                <div className="p-2 rounded-md bg-zinc-800/60 text-emerald-400 border border-zinc-700/50 shrink-0">
+                  <ShieldCheck className="w-4 h-4" />
+                </div>
                 <div>
-                  <span className="font-semibold text-white block">Strict Data Privacy</span>
-                  <span className="text-zinc-500">Encrypted in transit and at rest with zero data sharing.</span>
+                  <span className="text-xs font-semibold text-zinc-200 block">Strict Data Privacy</span>
+                  <span className="text-xs text-zinc-400 font-normal block mt-0.5">
+                    Encrypted in transit and at rest with zero third-party data sharing.
+                  </span>
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 rounded-lg border border-zinc-800 bg-zinc-900/60 p-3.5">
-                <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
+              <div className="p-3.5 rounded-lg bg-zinc-900/40 border border-zinc-800/60 flex items-start gap-3 transition-colors hover:bg-zinc-900/80">
+                <div className="p-2 rounded-md bg-zinc-800/60 text-emerald-400 border border-zinc-700/50 shrink-0">
+                  <CheckCircle2 className="w-4 h-4" />
+                </div>
                 <div>
-                  <span className="font-semibold text-white block">Guaranteed SLA Response</span>
-                  <span className="text-zinc-500">Direct evaluation by senior full-stack architects.</span>
+                  <span className="text-xs font-semibold text-zinc-200 block">Guaranteed SLA Response</span>
+                  <span className="text-xs text-zinc-400 font-normal block mt-0.5">
+                    Direct technical evaluation by senior full-stack software architects.
+                  </span>
                 </div>
               </div>
             </div>
+
           </div>
 
-          {/* Right Column: Architectural Form Card */}
+          {/* Right Column (7 Cols): Architectural Lead Form Card */}
           <div className="lg:col-span-7">
-            <div className="relative rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-8 shadow-2xl backdrop-blur-md">
+            <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/70 p-6 sm:p-8 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] backdrop-blur-xl">
               
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit}>
                 
-                {/* Full Name & Email Fields */}
-                <div className="grid gap-6 sm:grid-cols-2">
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-400 block">
-                      Full Name <span className="text-zinc-500">*</span>
+                {/* 2-Column Desktop Inputs: Full Name & Work Email */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                  <div>
+                    <label className="block text-xs font-medium text-zinc-300 mb-1.5 font-mono tracking-wide">
+                      Full Name <span className="text-indigo-400 ml-0.5">*</span>
                     </label>
                     <input
                       type="text"
@@ -117,13 +134,13 @@ export default function LeadForm() {
                       onChange={handleChange}
                       required
                       placeholder="e.g. Sarah Jenkins"
-                      className="w-full rounded-lg border border-zinc-800 bg-[#0D0E11] px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 transition-all focus:border-zinc-500 focus:outline-none focus:ring-1 focus:ring-zinc-400/20"
+                      className="w-full bg-zinc-950/80 border border-zinc-800 rounded-lg px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 focus:bg-zinc-950 transition-all duration-150"
                     />
                   </div>
 
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-zinc-400 block">
-                      Work Email <span className="text-zinc-500">*</span>
+                  <div>
+                    <label className="block text-xs font-medium text-zinc-300 mb-1.5 font-mono tracking-wide">
+                      Work Email <span className="text-indigo-400 ml-0.5">*</span>
                     </label>
                     <input
                       type="email"
@@ -132,17 +149,17 @@ export default function LeadForm() {
                       onChange={handleChange}
                       required
                       placeholder="sarah@company.com"
-                      className="w-full rounded-lg border border-zinc-800 bg-[#0D0E11] px-3.5 py-2.5 text-sm text-white placeholder-zinc-500 transition-all focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-400/20"
+                      className="w-full bg-zinc-950/80 border border-zinc-800 rounded-lg px-3.5 py-2.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 focus:bg-zinc-950 transition-all duration-150"
                     />
                   </div>
                 </div>
 
-                {/* Interactive Budget Pill Buttons */}
-                <div className="space-y-2">
-                  <label className="text-xs font-medium text-zinc-400 block">
-                    Estimated Project Budget <span className="text-zinc-500">*</span>
+                {/* 3-Column Budget Selector Pill Buttons */}
+                <div className="mb-5">
+                  <label className="block text-xs font-medium text-zinc-300 mb-2 font-mono tracking-wide">
+                    Estimated Project Budget <span className="text-indigo-400 ml-0.5">*</span>
                   </label>
-                  <div className="grid grid-cols-3 gap-3 pt-1">
+                  <div className="grid grid-cols-3 gap-2.5">
                     {BUDGET_RANGES.map((range) => {
                       const isSelected = formData.budgetRange === range;
                       return (
@@ -150,23 +167,23 @@ export default function LeadForm() {
                           key={range}
                           type="button"
                           onClick={() => handleBudgetSelect(range)}
-                          className={`rounded-lg border p-3 text-center transition-all ${
+                          className={`px-3 py-2.5 rounded-lg text-xs font-medium border text-center transition-all duration-150 cursor-pointer select-none ${
                             isSelected
-                              ? 'bg-zinc-800 border-zinc-600 text-white font-medium shadow-inner'
-                              : 'bg-zinc-900/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                              ? 'bg-zinc-800 border-indigo-500/80 text-white shadow-inner ring-1 ring-indigo-500/30 font-semibold'
+                              : 'bg-zinc-950/60 border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200 hover:bg-zinc-900/80'
                           }`}
                         >
-                          <span className="block text-xs font-mono">{range}</span>
+                          <span className="block font-mono">{range}</span>
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Project Message */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-zinc-400 block">
-                    Project Details & Goals <span className="text-zinc-500">*</span>
+                {/* Project Details Textarea */}
+                <div className="mb-6">
+                  <label className="block text-xs font-medium text-zinc-300 mb-1.5 font-mono tracking-wide">
+                    Project Details & Goals <span className="text-indigo-400 ml-0.5">*</span>
                   </label>
                   <textarea
                     name="message"
@@ -175,24 +192,24 @@ export default function LeadForm() {
                     onChange={handleChange}
                     required
                     placeholder="Describe your web engineering, agency audit, or custom SaaS development goals..."
-                    className="w-full rounded-lg border border-zinc-800 bg-[#0D0E11] p-3.5 text-sm text-white placeholder-zinc-500 transition-all focus:border-zinc-500 focus:outline-none focus:ring-2 focus:ring-zinc-400/20"
+                    className="w-full bg-zinc-950/80 border border-zinc-800 rounded-lg p-3.5 text-sm text-zinc-100 placeholder:text-zinc-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/50 transition-all duration-150 resize-none min-h-[120px]"
                   />
                 </div>
 
-                {/* Primary Submit Button: Solid Crisp White */}
+                {/* Primary Submit Button: Crisp Solid White */}
                 <button
                   type="submit"
                   disabled={loading}
-                  className="flex w-full items-center justify-center gap-2 rounded-lg bg-white px-6 py-3.5 text-sm font-medium text-zinc-950 shadow-sm transition-all hover:bg-zinc-200 active:scale-[0.99] disabled:opacity-50"
+                  className="w-full py-3 px-4 rounded-lg text-sm font-semibold bg-white hover:bg-zinc-200 text-zinc-950 shadow-md transition-all duration-150 ease-out active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer disabled:bg-zinc-800 disabled:text-zinc-500 disabled:cursor-not-allowed border disabled:border-zinc-700/50"
                 >
                   {loading ? (
                     <>
-                      <Loader2 className="h-4 w-4 animate-spin text-zinc-950" />
+                      <Loader2 className="w-4 h-4 animate-spin text-zinc-950" />
                       <span>Processing Inquiry...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="h-4 w-4 text-zinc-950" />
+                      <Send className="w-4 h-4 text-zinc-950 group-hover:translate-x-0.5 transition-transform" />
                       <span>Submit Inquiry to Agency</span>
                     </>
                   )}
