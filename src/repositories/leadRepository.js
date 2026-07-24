@@ -31,4 +31,21 @@ export const leadRepository = {
     // Soft delete implementation: sets isDeleted = true to preserve data history
     return Lead.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
   },
+
+  updateLeadReply: async (id, adminReply) => {
+    await connectDB();
+    return Lead.findOneAndUpdate(
+      { _id: id, isDeleted: false },
+      { adminReply, repliedAt: new Date() },
+      { new: true, runValidators: true }
+    );
+  },
+
+  findLeadsByEmail: async (email) => {
+    await connectDB();
+    return Lead.find(
+      { email: email.toLowerCase(), isDeleted: false },
+      { fullName: 1, email: 1, message: 1, budgetRange: 1, status: 1, adminReply: 1, repliedAt: 1, createdAt: 1 }
+    ).sort({ createdAt: -1 });
+  },
 };

@@ -54,3 +54,20 @@ export function validateUpdateLeadStatusPayload(id, body) {
 
   return { isValid: true, id, status };
 }
+
+export function validateAdminReplyPayload(id, body) {
+  if (!id || !isValidObjectId(id)) {
+    return { isValid: false, error: 'Invalid lead ID format', status: 400 };
+  }
+
+  if (!body || typeof body !== 'object') {
+    return { isValid: false, error: 'Invalid reply payload body', status: 400 };
+  }
+
+  const adminReply = sanitizeString(body.adminReply);
+  if (!adminReply || adminReply.length < 1 || adminReply.length > 500) {
+    return { isValid: false, error: 'Reply must be between 1 and 500 characters', status: 422 };
+  }
+
+  return { isValid: true, id, adminReply };
+}

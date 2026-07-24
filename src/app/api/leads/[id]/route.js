@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { validateUpdateLeadStatusPayload } from '@/validators/leadValidator';
+import { validateUpdateLeadStatusPayload, validateAdminReplyPayload } from '@/validators/leadValidator';
 import { leadService } from '@/services/leadService';
 import { getSessionAdmin } from '@/lib/auth';
 import { isValidObjectId } from '@/utils/sanitize';
@@ -87,6 +87,53 @@ export async function DELETE(req, { params }) {
     logger.error('Unhandled error in DELETE /api/leads/[id]', error);
     return NextResponse.json(
       { success: false, error: 'Failed to delete lead record' },
+      { status: 500 }
+    );
+  }
+}
+
+// Protected endpoint: Add admin reply note to a lead
+export async function PUT(req, { params }) {
+  try {
+    const admin = await getSessionAdmin();
+    if (!admin) {
+      return NextResponse.json(
+        { success: false, error: 'Unauthorized. Admin authentication required.' },
+        { status: 401 }
+      );
+    }
+
+    const { id } = params;
+    const body = await req.json();
+
+    const validation = validateAdminReplyPayload(id, body);
+    if (!validation.isValid) {
+      return NextResponse.json(
+        { success: false, error: validation.error },
+        { status: validation.status }
+      );
+    }
+
+    const result = await leadService.replyToLead(validation.id, validation.adminReply);
+    if (!result.success) {
+      return NextResponse.json(
+        { success: false, error: result.error },
+        { status: result.status }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        message: 'Reply sent successfully',
+        data: result.lead,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    logger.error('Unhandled error in PUT /api/leads/[id]', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to save admin reply' },
       { status: 500 }
     );
   }

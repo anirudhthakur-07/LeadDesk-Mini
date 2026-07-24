@@ -55,4 +55,18 @@ export const leadService = {
     logger.info('Lead record soft-deleted', { leadId: id });
     return { success: true };
   },
+
+  replyToLead: async (id, adminReply) => {
+    const updated = await leadRepository.updateLeadReply(id, adminReply);
+    if (!updated) {
+      return { success: false, error: 'Lead record not found or already deleted', status: 404 };
+    }
+    logger.info('Admin reply added to lead', { leadId: id });
+    return { success: true, lead: updated };
+  },
+
+  getResponsesByEmail: async (email) => {
+    const leads = await leadRepository.findLeadsByEmail(email);
+    return { success: true, leads };
+  },
 };

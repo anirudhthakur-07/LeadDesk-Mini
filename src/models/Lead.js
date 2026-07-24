@@ -34,6 +34,16 @@ const LeadSchema = new mongoose.Schema(
       enum: ['New', 'Contacted', 'Closed'],
       default: 'New',
     },
+    adminReply: {
+      type: String,
+      default: '',
+      trim: true,
+      maxlength: [500, 'Admin reply cannot exceed 500 characters'],
+    },
+    repliedAt: {
+      type: Date,
+      default: null,
+    },
     isDeleted: {
       type: Boolean,
       default: false,

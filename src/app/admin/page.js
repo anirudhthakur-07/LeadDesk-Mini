@@ -171,6 +171,27 @@ export default function AdminDashboard() {
     }
   };
 
+  // Reply to lead inquiry with admin note
+  const handleReplyToLead = async (id, replyText) => {
+    try {
+      const res = await fetch(`/api/leads/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ adminReply: replyText }),
+      });
+
+      if (res.ok) {
+        addToast('Reply sent successfully', 'success', 3500);
+        fetchLeads();
+      } else {
+        const data = await res.json();
+        throw new Error(data.error || 'Failed to send reply.');
+      }
+    } catch (err) {
+      addToast(err.message || 'Error sending reply', 'error', 4000);
+    }
+  };
+
   // ZERO-FOPC GUARD: Render secure full-screen loading screen while verifying session
   if (authChecking || !admin) {
     return (
@@ -246,6 +267,7 @@ export default function AdminDashboard() {
           leads={processedLeads}
           onUpdateLeadStatus={handleUpdateStatus}
           onDeleteLead={handleDeleteLead}
+          onReplyToLead={handleReplyToLead}
           loading={loading}
           searchQuery={search}
           onClearSearch={() => setSearch('')}
