@@ -7,6 +7,7 @@ import AdminHeader from '@/components/AdminHeader';
 import MetricsBar from '@/components/MetricsBar';
 import SearchFilterBar from '@/components/SearchFilterBar';
 import LeadsTable from '@/components/LeadsTable';
+import DashboardToolbar from '@/components/dashboard/DashboardToolbar';
 import { RefreshCw } from 'lucide-react';
 import { sortLeads } from '@/utils/sorter';
 
@@ -21,6 +22,7 @@ export default function AdminDashboard() {
   const [currentSort, setCurrentSort] = useState('NEWEST');
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [lastUpdatedTime, setLastUpdatedTime] = useState(null);
 
   // Fetch session & current admin info
   useEffect(() => {
@@ -54,6 +56,7 @@ export default function AdminDashboard() {
       if (data.success) {
         setLeads(data.data || []);
         setMetrics(data.metrics || { total: 0, newLeads: 0, contacted: 0, closed: 0 });
+        setLastUpdatedTime(new Date().toISOString());
         if (isManualSync) {
           addToast('Pipeline synchronized with MongoDB Atlas', 'info', 3000);
         }
@@ -144,32 +147,37 @@ export default function AdminDashboard() {
       <AdminHeader adminEmail={admin?.email} />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        {/* Page Title & Sync Control */}
+        {/* Page Title & Operational Control */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-extrabold text-white tracking-tight flex items-center gap-3">
               <span>Leads Management</span>
               <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400">
-                Toast System Active
+                Quick Actions Active
               </span>
             </h1>
             <p className="text-slate-400 text-sm mt-1">
-              Enterprise pipeline analytics, instant search, multi-criteria sorting, and toast notifications.
+              Enterprise pipeline control center with real-time sync, active filter indicators, and export tools.
             </p>
           </div>
-
-          <button
-            onClick={() => fetchLeads(true)}
-            disabled={refreshing}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-white/10 bg-slate-900/60 text-xs font-semibold text-slate-300 hover:text-white hover:border-blue-500/40 transition-all duration-200"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 ${refreshing ? 'animate-spin text-blue-400' : ''}`} />
-            <span>Sync DB</span>
-          </button>
         </div>
 
         {/* Enterprise CRM Analytics Dashboard Grid */}
         <MetricsBar metrics={metrics} leads={leads} loading={loading} />
+
+        {/* Enterprise Quick Actions Toolbar */}
+        <DashboardToolbar
+          search={search}
+          onClearSearch={() => setSearch('')}
+          activeTab={activeTab}
+          onResetFilters={() => setActiveTab('All')}
+          currentSort={currentSort}
+          leads={processedLeads}
+          totalFilteredCount={processedLeads.length}
+          onRefresh={() => fetchLeads(true)}
+          refreshing={refreshing}
+          lastUpdatedTime={lastUpdatedTime}
+        />
 
         {/* Instant Search, Multi-Criteria Sort & Filter Bar */}
         <SearchFilterBar
