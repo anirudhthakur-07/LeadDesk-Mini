@@ -77,10 +77,20 @@ export default function LoginPage() {
             <p className="text-xs text-zinc-400 mt-1 font-normal">Sign in to manage lead pipelines</p>
           </div>
 
-          {/* Seed Notice */}
-          <div className="mb-6 p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-zinc-400">
-            <p className="font-medium text-zinc-300 mb-0.5">Default Admin Credentials:</p>
-            <p className="opacity-90 font-mono text-[11px] text-zinc-400">admin@leaddesk.com / AdminPassword123!</p>
+          {/* Evaluator Demo Credentials Notice */}
+          <div className="mb-6 p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800 text-xs text-zinc-400">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="font-medium text-zinc-200 text-xs flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                Evaluator Demo Credentials
+              </span>
+              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-wider">Task Testing</span>
+            </div>
+            <div className="flex items-center justify-between bg-zinc-900/90 border border-zinc-800/80 rounded-lg px-3 py-2 font-mono text-[11px] text-zinc-300">
+              <span className="text-zinc-200">admin@leaddesk.com</span>
+              <span className="text-zinc-600">/</span>
+              <span className="text-indigo-300 font-semibold">AdminPassword123!</span>
+            </div>
           </div>
 
           {/* Error Message */}
