@@ -4,6 +4,8 @@ export const ALLOWED_BUDGETS = [
   '$10,000+'
 ];
 
+export const BUDGET_RANGES = ALLOWED_BUDGETS;
+
 export const ALLOWED_STATUSES = ['New', 'Contacted', 'Closed'];
 
 export const COOKIE_NAME = 'leaddesk_token';

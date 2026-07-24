@@ -1,45 +1,55 @@
 'use client';
 
 import Link from 'next/link';
-import { Sparkles, Shield } from 'lucide-react';
+import { ShieldCheck, Heart } from 'lucide-react';
 
 export default function Footer() {
   return (
-    <footer className="w-full glass-panel border-t border-dark-border py-10 mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Brand & Copyright */}
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-600 to-indigo-400 flex items-center justify-center shadow-glow">
-            <Sparkles className="w-4 h-4 text-white" />
+    <footer className="border-t border-white/10 bg-[#05070B] py-12 text-slate-400">
+      <div className="mx-auto max-w-7xl px-6">
+        
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 border-b border-white/10 pb-8">
+          
+          {/* Brand & Tagline */}
+          <div className="flex items-center gap-3">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 shadow-md shadow-blue-500/20">
+              <ShieldCheck className="h-5 w-5 text-white" />
+            </div>
+            <div>
+              <span className="text-base font-bold text-white tracking-tight">LeadDesk Mini</span>
+              <span className="block text-xs text-slate-400">Enterprise Digital Agency Infrastructure</span>
+            </div>
           </div>
-          <span className="text-sm font-semibold text-slate-300">
-            &copy; {new Date().getFullYear()} LeadDesk Digital Agency. All rights reserved.
-          </span>
+
+          {/* Quick Links */}
+          <div className="flex items-center gap-6 text-xs font-medium text-slate-300">
+            <a href="#features" className="transition-colors hover:text-white">Capabilities</a>
+            <a href="#capture-lead" className="transition-colors hover:text-white">Submit Lead</a>
+            <Link href="/login" className="transition-colors hover:text-white">Admin Portal</Link>
+          </div>
+
         </div>
 
-        {/* Mandatory Task Credit Line (CRITICAL) */}
-        <div className="text-sm text-slate-400 font-medium">
-          Built for{' '}
-          <a
-            href="https://digitalheroesco.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-brand-400 hover:text-brand-300 underline underline-offset-4 font-semibold transition-colors"
-          >
-            Digital Heroes Training Task
-          </a>
+        {/* Bottom Credits & Mandatory Task Credit Link */}
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <div>
+            &copy; {new Date().getFullYear()} LeadDesk Mini. All rights reserved.
+          </div>
+
+          {/* MANDATORY CREDIT LINK FOR DIGITAL HEROES TASK */}
+          <div className="flex items-center gap-1.5 text-slate-400 font-medium">
+            <span>Built for</span>
+            <a
+              href="https://digitalheroesco.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-400 hover:text-blue-300 underline underline-offset-4 font-semibold transition-colors"
+            >
+              Digital Heroes Training Task
+            </a>
+          </div>
         </div>
 
-        {/* Quick Admin Link */}
-        <div>
-          <Link
-            href="/login"
-            className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 transition-colors"
-          >
-            <Shield className="w-3.5 h-3.5 text-brand-500" />
-            <span>Admin Portal</span>
-          </Link>
-        </div>
       </div>
     </footer>
   );
