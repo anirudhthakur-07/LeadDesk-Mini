@@ -1,5 +1,6 @@
 import './globals.css';
 import { ToastProvider } from '@/context/ToastContext';
+import SpatialBackground from '@/components/ui/SpatialBackground';
 
 export const metadata = {
   title: 'LeadDesk Digital | Premium Web Engineering & Lead Infrastructure',
@@ -18,7 +19,8 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body className="bg-dark-bg text-slate-100 min-h-screen flex flex-col font-sans antialiased">
+      <body className="bg-dark-bg text-slate-100 min-h-screen flex flex-col font-sans antialiased relative">
+        <SpatialBackground />
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>

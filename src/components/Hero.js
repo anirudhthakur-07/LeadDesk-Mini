@@ -4,7 +4,6 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Lock, Globe } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
-import SpatialBackground from '@/components/ui/SpatialBackground';
 
 // Floating particle dots (pure CSS, no libraries)
 function FloatingParticles() {
@@ -95,10 +94,7 @@ export default function Hero() {
   const layer3Y = mousePos.y * 10;
 
   return (
-    <section className="relative overflow-hidden pt-16 pb-24 border-b border-zinc-800/60 bg-[#050507]">
-
-      {/* High-End Animated Canvas Background */}
-      <SpatialBackground />
+    <section className="relative overflow-hidden pt-16 pb-24 border-b border-zinc-800/60 bg-transparent">
 
       <div className="relative mx-auto max-w-7xl px-6 z-10">
 
