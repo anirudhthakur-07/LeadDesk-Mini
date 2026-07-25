@@ -40,7 +40,7 @@ const BENTO_FEATURES = [
 
 export default function Features() {
   return (
-    <section id="features" className="py-24 border-b border-zinc-800/60 bg-[#09090B]">
+    <section id="features" className="py-24 bg-transparent">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
         {/* Section Header & Announcement Pill */}

@@ -71,7 +71,7 @@ export default function LeadForm() {
   const activeRanges = BUDGET_RANGES_BY_CURRENCY[selectedCurrency] || BUDGET_RANGES_BY_CURRENCY.USD;
 
   return (
-    <section id="capture-lead" className="py-16 border-b border-zinc-800/60 bg-[#09090B]">
+    <section id="capture-lead" className="py-16 bg-transparent">
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid gap-12 lg:grid-cols-12 lg:items-start">
           

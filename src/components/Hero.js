@@ -94,7 +94,7 @@ export default function Hero() {
   const layer3Y = mousePos.y * 10;
 
   return (
-    <section className="relative overflow-hidden pt-16 pb-24 border-b border-zinc-800/60 bg-transparent">
+    <section className="relative overflow-hidden pt-16 pb-24 bg-transparent">
 
       <div className="relative mx-auto max-w-7xl px-6 z-10">
 

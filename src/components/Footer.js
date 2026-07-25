@@ -5,7 +5,7 @@ import Logo from '@/components/ui/Logo';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-zinc-800/80 bg-[#09090B] py-12 text-xs text-zinc-400">
+    <footer className="bg-transparent py-12 text-xs text-zinc-400">
       <div className="mx-auto max-w-7xl px-6 flex flex-col md:flex-row items-center justify-between gap-6">
         
         {/* Left: Brand Identity with Logo Component */}

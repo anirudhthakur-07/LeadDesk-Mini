@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-[#09090B]/90 backdrop-blur-md transition-all">
+      <header className="sticky top-0 z-40 w-full bg-[#09090B]/80 backdrop-blur-md transition-all">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
           
           {/* Brand Logo Component */}
