@@ -16,7 +16,7 @@ LeadDesk Mini is a full-stack lead management product built for the **Digital He
 - **Candidate Name**: Anirudh Thakur
 - **Live Production URL**: [https://lead-desk-mini-t44a.vercel.app](https://lead-desk-mini-t44a.vercel.app)
 - **Admin Dashboard URL**: [https://lead-desk-mini-t44a.vercel.app/admin](https://lead-desk-mini-t44a.vercel.app/admin)
-- **GitHub Repository**: [https://github.com/anirudhthakur-07/LeadDesk-Mini](https://github.com/anirudhthakur-07/LeadDesk-Mini)
+- **Video Walkthrough**: [https://youtu.be/OHK-YguAR_o](https://youtu.be/OHK-YguAR_o)
 - **Test Credentials**:
   - **Admin Email**: `admin@leaddesk.com`
   - **Admin Password**: `AdminPassword123!`
