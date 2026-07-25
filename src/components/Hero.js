@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Lock, Globe } from 'lucide-react';
 import ScrollReveal from '@/components/ui/ScrollReveal';
+import SpatialBackground from '@/components/ui/SpatialBackground';
 
 // Floating particle dots (pure CSS, no libraries)
 function FloatingParticles() {
@@ -96,45 +97,8 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden pt-16 pb-24 border-b border-zinc-800/60 bg-[#050507]">
 
-      {/* Ambient Indigo Glow Orb (Top) */}
-      <div
-        aria-hidden="true"
-        className="absolute pointer-events-none"
-        style={{
-          top: '-15%',
-          left: '30%',
-          width: '500px',
-          height: '500px',
-          background: 'radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%)',
-          filter: 'blur(60px)',
-          animation: 'glow-drift-1 10s ease-in-out infinite',
-        }}
-      />
-
-      {/* Ambient Teal Glow Orb (Bottom-Right) */}
-      <div
-        aria-hidden="true"
-        className="absolute pointer-events-none"
-        style={{
-          bottom: '-10%',
-          right: '15%',
-          width: '400px',
-          height: '400px',
-          background: 'radial-gradient(circle, rgba(45, 212, 191, 0.08) 0%, transparent 70%)',
-          filter: 'blur(50px)',
-          animation: 'glow-drift-2 12s ease-in-out infinite',
-        }}
-      />
-
-      {/* Fine Radial Dot Grid Background Pattern */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30"
-      />
-
-      {/* Floating Particles & Geometric Shapes */}
-      <FloatingParticles />
-      <FloatingGeometry />
+      {/* High-End Animated Canvas Background */}
+      <SpatialBackground />
 
       <div className="relative mx-auto max-w-7xl px-6 z-10">
 
