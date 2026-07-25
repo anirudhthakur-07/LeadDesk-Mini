@@ -54,6 +54,8 @@ LeadDesk Mini is a full-stack lead management product built for the **Digital He
 
 ## 2. Data Model Architecture
 
+![LeadDesk Mini Data Model Schema Diagram](./public/data_model_diagram.jpg)
+
 The application relies on two primary Mongoose schemas in MongoDB Atlas:
 
 ### Lead Schema (`models/Lead.js`)
@@ -124,29 +126,13 @@ LeadDesk Mini implements enterprise DevSecOps standards for route guarding and s
 
 ---
 
-## 6. API Reference
-
-| Method | Endpoint | Description | Auth Required |
-| :--- | :--- | :--- | :---: |
-| `POST` | `/api/leads` | Submit a new lead inquiry | No |
-| `GET` | `/api/leads` | Retrieve leads list & metrics | **Yes** |
-| `PATCH` | `/api/leads/[id]` | Update lead status (`New`, `Contacted`, `Closed`) | **Yes** |
-| `PUT` | `/api/leads/[id]` | Add admin reply note to a lead | **Yes** |
-| `DELETE` | `/api/leads/[id]` | Soft-delete a lead record | **Yes** |
-| `POST` | `/api/leads/responses` | Public email lookup for admin replies | No (Rate-Limited) |
-| `POST` | `/api/auth/login` | Authenticate administrator | No |
-| `GET` | `/api/auth/me` | Verify active admin session | **Yes** |
-| `POST` | `/api/auth/logout` | Terminate session & clear cookie | No |
-
----
-
-## 7. AI Usage Declaration
+## 6. AI Usage Declaration
 
 *AI Statement (Digital Heroes Requirement)*: AI models (Claude & Gemini) were used during development to pressure-test schema validation edge cases, generate initial UI component scaffolding, and audit cross-browser layout stability. All UI design tokens, status dropdown selectors, tabular numbers, scroll reveal hooks, and JWT authentication flows were customized, refined, and audited manually.
 
 ---
 
-## 8. Author & License
+## 7. Author & License
 
 - **Author**: Anirudh Thakur
 - **GitHub**: [github.com/anirudhthakur-07](https://github.com/anirudhthakur-07)
