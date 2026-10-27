@@ -8,18 +8,6 @@
 
 LeadDesk Mini is a full-stack lead management product built for the  (Role 04: Full Stack Development — Task A & Task B)**. Built with Next.js 14, React 18, Tailwind CSS, MongoDB Atlas, and JWT authentication, it features a public landing page with validated lead capture forms and a real-time protected management dashboard.
 
----
-
-## 📍 Digital Heroes Qualification Task Submission
-
-- **Role**: `04 / 16 — Full Stack Development`
-- **Candidate Name**: Anirudh Thakur
-- **Live Production URL**: [https://lead-desk-mini-t44a.vercel.app](https://lead-desk-mini-t44a.vercel.app)
-- **Admin Dashboard URL**: [https://lead-desk-mini-t44a.vercel.app/admin](https://lead-desk-mini-t44a.vercel.app/admin)
-- **Video Walkthrough**: [https://youtu.be/OHK-YguAR_o](https://youtu.be/OHK-YguAR_o)
-- **Test Credentials**:
-  - **Admin Email**: `admin@leaddesk.com`
-  - **Admin Password**: `AdminPassword123!`
 
 ---
 
