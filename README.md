@@ -6,7 +6,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](#11-license)
 
-LeadDesk Mini is a full-stack lead management product built for the **Digital Heroes Internship Programme (Role 04: Full Stack Development — Task A & Task B)**. Built with Next.js 14, React 18, Tailwind CSS, MongoDB Atlas, and JWT authentication, it features a public landing page with validated lead capture forms and a real-time protected management dashboard.
+LeadDesk Mini is a full-stack lead management product built for the  (Role 04: Full Stack Development — Task A & Task B)**. Built with Next.js 14, React 18, Tailwind CSS, MongoDB Atlas, and JWT authentication, it features a public landing page with validated lead capture forms and a real-time protected management dashboard.
 
 ---
 
